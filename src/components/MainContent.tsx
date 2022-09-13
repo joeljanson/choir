@@ -1,5 +1,5 @@
 import { ToneAudioBuffer } from "tone";
-import "../css/MainContent.css";
+import "../css/MainContent.scss";
 import AudioRecorderComponent from "./AudioRecorderComponent";
 
 import Pagination from "./Pagination";

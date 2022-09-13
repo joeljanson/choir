@@ -7,7 +7,7 @@ import IntroComponent from "./components/IntroComponent";
 import MainContent from "./components/MainContent";
 
 //Load CSS
-import "./App.css";
+import "./App.scss";
 
 // Setup audio mixer
 import { Audio } from "./utils/Audio";

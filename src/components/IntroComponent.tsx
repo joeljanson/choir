@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Channel, UserMedia, start } from "tone";
-import "../css/IntroComponent.css";
+import "../css/IntroComponent.scss";
 
 export type IntroComponentProps = {
 	onToneStarted: () => void;

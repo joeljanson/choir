@@ -1,4 +1,4 @@
-import "../css/Pagination.css";
+import "../css/Pagination.scss";
 
 type PaginationProps = {
 	currentPage: number;

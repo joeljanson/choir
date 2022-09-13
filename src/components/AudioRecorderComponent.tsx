@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Player, Channel, Recorder } from "tone";
 import { inputs, outputs } from "../utils/constants";
-import "../css/TextMessageAudioComponent.css";
 
 function AudioRecorderComponent() {
 	const channel = useRef<Channel>(new Channel());
@@ -14,7 +13,7 @@ function AudioRecorderComponent() {
 		inputChannel.current.connect(recorder.current);
 
 		channel.current.send(outputs.channel1, 0);
-		channel.current.volume.rampTo(0, 0.1);
+		channel.current.volume.rampTo(-6, 0.1);
 		return () => {
 			console.log("Component unmounted, cleanup?", channel.current);
 			// eslint-disable-next-line react-hooks/exhaustive-deps

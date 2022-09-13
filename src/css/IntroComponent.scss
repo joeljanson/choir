@@ -9,12 +9,11 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-}
-
-.intro-content-wrapper img {
-	height: 80%;
-	width: 100%;
-	object-fit: cover;
+	img {
+		height: 80%;
+		width: 100%;
+		object-fit: cover;
+	}
 }
 
 .intro-content-text-area {
@@ -24,17 +23,16 @@
 	width: 100%;
 	height: 20%;
 	text-align: center;
-}
+	.text-content {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+		text-align: center;
 
-.intro-content-text-area .text-content {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-}
-
-.intro-content-text-area .text-content h1 {
-	margin-bottom: 20px;
+		h1 {
+			margin-bottom: 20px;
+		}
+	}
 }
