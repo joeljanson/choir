@@ -13,6 +13,7 @@ function TextMessageAudioComponent({
 	const channel = useRef<Channel>(new Channel());
 	const buffer = useRef<ToneAudioBuffer>();
 	const [audioLoaded, setAudioLoaded] = useState(false);
+	const [fade, setFade] = useState(false);
 
 	useEffect(() => {
 		channel.current.send(outputs.channel1, 0);
@@ -35,8 +36,11 @@ function TextMessageAudioComponent({
 
 	return (
 		<div
-			className="upper-content textMessageAudioComponent"
-			onClick={async () => {
+			className={
+				"upper-content textMessageAudioComponent " + (fade ? "clicked" : "")
+			}
+			onMouseDown={async () => {
+				setFade(true);
 				const player = new Player({
 					url: buffer.current,
 					loop: false,
@@ -48,8 +52,12 @@ function TextMessageAudioComponent({
 				player.start();
 				console.log("should sound");
 			}}
+			onTransitionEnd={() => {
+				setFade(false);
+				console.log("Animation ended");
+			}}
 		>
-			<h1>EN LJUDSPELARE</h1>
+			<p>Click anywhere to play sounds</p>
 		</div>
 	);
 }

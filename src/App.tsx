@@ -18,7 +18,7 @@ const piano = require("./audio/a1.mp3");
 function App() {
 	const [buffers, setBuffers] = useState<ToneAudioBuffer[]>([]);
 	const [hasMicrophoneAccess, setHasMicrophoneAccess] = useState(false);
-	const [wantsMicrophoneAccess] = useState(true);
+	const [wantsMicrophoneAccess] = useState(false);
 	const [toneStarted, setToneStarted] = useState(false);
 	const [buffersLoaded, setBuffersLoaded] = useState(false);
 

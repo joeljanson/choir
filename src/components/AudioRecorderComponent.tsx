@@ -2,11 +2,36 @@ import React, { useEffect, useRef, useState } from "react";
 import { Player, Channel, Recorder } from "tone";
 import { inputs, outputs } from "../utils/constants";
 
-function AudioRecorderComponent() {
+//Import scss
+import "../css/AudioRecorder.scss";
+
+export type AudioRecorderComponentProps = {
+	/**
+	 * A delay in seconds before the recording starts
+	 */
+	recordingDelay: number;
+	/**
+	 * How long the duration of the recording should be in seconds.
+	 */
+	duration: number;
+	/**
+	 * How long the playback of the recording should be delayed, in seconds.
+	 */
+	playbackDelay: number;
+};
+
+function AudioRecorderComponent({
+	recordingDelay,
+	duration,
+	playbackDelay,
+}: AudioRecorderComponentProps) {
 	const channel = useRef<Channel>(new Channel());
 	const inputChannel = useRef<Channel>(new Channel());
 	const recorder = useRef<Recorder>(new Recorder());
 	const [recording, setRecording] = useState(false);
+	const [willStartRecording, setWillStartRecording] = useState<Boolean>(false);
+
+	const timerRef = useRef<any>();
 
 	useEffect(() => {
 		inputChannel.current.receive(inputs.audioIn);
@@ -19,42 +44,71 @@ function AudioRecorderComponent() {
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			channel.current.volume.rampTo(-Infinity, 0.1);
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-			recorder.current.stop();
+			if (recording) {
+				// eslint-disable-next-line react-hooks/exhaustive-deps
+				recorder.current.stop();
+			}
+			clearTimeout(timerRef.current);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {}, []);
+	function handleFinishedRecording() {
+		recorder.current.stop().then((recording) => {
+			const url = URL.createObjectURL(recording);
+			console.log("Recording finished, url is: ", url);
+			const player = new Player({
+				url: url,
+				loop: false,
+				onload: () => {
+					console.log("buffer loaded");
+					player.start(playbackDelay);
+				},
+				onstop: () => {
+					player.dispose();
+				},
+			});
+			player.connect(channel.current);
+		});
+		setRecording(false);
+	}
 
 	return (
 		<div
-			className="upper-content recorder-audio-component"
+			className="upper-content audio-recorder"
 			onClick={async () => {
 				if (!recording) {
-					recorder.current.start();
-					setRecording(true);
+					setWillStartRecording(true);
+					timerRef.current = setTimeout(() => {
+						console.log("Recording started");
+						recorder.current.start();
+						setRecording(true);
+						setWillStartRecording(false);
+						if (duration) {
+							console.log(
+								`Duration exists, will stop recording in ${duration}`
+							);
+							timerRef.current = setTimeout(() => {
+								console.log(`Duration ended, handles finished recording`);
+								handleFinishedRecording();
+							}, duration * 1000);
+						}
+					}, recordingDelay * 1000);
 				} else {
-					recorder.current.stop().then((recording) => {
-						const url = URL.createObjectURL(recording);
-						console.log("Recording finished, url is: ", url);
-						const player = new Player({
-							url: url,
-							loop: false,
-							onload: () => {
-								console.log("buffer loaded");
-								player.start();
-							},
-							onstop: () => {
-								player.dispose();
-							},
-						});
-						player.connect(channel.current);
-					});
-					setRecording(false);
+					clearTimeout(timerRef.current);
+					console.log(`Recording manually stopped, handles finished recording`);
+					setWillStartRecording(false);
+					handleFinishedRecording();
 				}
 			}}
 		>
-			<p>EN Ljudinspelare</p>
-			<div>{recording ? "Recording" : "Click to start recording"}</div>
+			<div>
+				{recording
+					? "Recording"
+					: willStartRecording
+					? "Will start recording"
+					: "Click to start recording"}
+			</div>
 		</div>
 	);
 }

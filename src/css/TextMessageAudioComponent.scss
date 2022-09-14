@@ -1,8 +1,14 @@
 .textMessageAudioComponent {
-	background-color: aliceblue;
+	background-color: black;
+	color: white;
 	width: 100vw;
 	height: 200px;
 	h1 {
 		background-color: red;
+	}
+
+	&.clicked {
+		background-color: rgb(201, 201, 201);
+		transition: background-color cubic-bezier(0.215, 0.61, 0.355, 1) 0.1s;
 	}
 }

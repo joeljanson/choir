@@ -18,7 +18,13 @@ const PagerView = ({ currentPage, buffers }: PagerViewProps) => {
 		case 1:
 			return <TextMessageAudioComponent buffers={buffers} />;
 		case 2:
-			return <AudioRecorderComponent />;
+			return (
+				<AudioRecorderComponent
+					duration={4}
+					recordingDelay={0}
+					playbackDelay={0}
+				/>
+			);
 		default:
 			return <div>Sidan finns ej</div>;
 	}
