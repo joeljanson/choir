@@ -56,7 +56,6 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 			// 	setFade(true);
 			// }}
 			onMouseDown={() => {
-				setFade(true);
 				const player = new Player({
 					url: buffer,
 					loop: false,
@@ -66,9 +65,11 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 					},
 				}).connect(channel.current);
 				player.start();
+				console.log("Is there a slight latency??");
 				console.log("should sound, click count is: ", clickCount);
 				console.log("should sound, channel.current is: ", channel.current);
 				setClickCount(clickCount + 1);
+				setFade(true);
 			}}
 			onTransitionEnd={() => {
 				setFade(false);
