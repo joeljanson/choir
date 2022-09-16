@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Player, Channel, ToneAudioBuffer, gainToDb } from "tone";
+import { Player, Channel, ToneAudioBuffer, gainToDb, now } from "tone";
 import { outputs } from "../utils/constants";
 import "../css/PlayerComponent.scss";
 
@@ -56,15 +56,18 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 			// 	setFade(true);
 			// }}
 			onMouseDown={() => {
+				let firstNow = now();
 				const player = new Player({
 					url: buffer,
 					loop: false,
-					onstop: () => {
-						player.disconnect(channel.current);
-						player.dispose();
+					onstop: (thisPlayer) => {
+						//player.disconnect(channel.current);
+						thisPlayer.dispose();
 					},
-				}).connect(channel.current);
+					onload: () => {},
+				}).toDestination();
 				player.start();
+				console.log("the time it takes: ", now() - firstNow);
 				console.log("Is there a slight latency??");
 				console.log("should sound, click count is: ", clickCount);
 				console.log("should sound, channel.current is: ", channel.current);
