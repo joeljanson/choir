@@ -26,6 +26,7 @@ function Pagination({
 			<div onClick={onPrevious} className="pagination-button">
 				<h1>Previous</h1>
 			</div>
+			<div className="current-page">{currentPage + 1}</div>
 			<div onClick={onNext} className="pagination-button">
 				<h1>Next</h1>
 			</div>

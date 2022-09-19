@@ -13,7 +13,14 @@ import "./App.scss";
 import { Audio } from "./utils/Audio";
 
 // Load audio files
-const piano = require("./audio/a1.mp3");
+const piano = require("./audio/clay.mp3");
+const keyboardClick = require("./audio/keyboard-click2.mp3");
+
+export type ComponentBuffer = {
+	bufferUrl: ToneAudioBuffer;
+	playlistBehaviour: "auto" | "none";
+	name: string;
+};
 
 function App() {
 	const [buffers, setBuffers] = useState<ToneAudioBuffer[]>([]);
@@ -24,24 +31,28 @@ function App() {
 
 	const [currentPage, setCurrentPage] = useState(0);
 
-	useRef(new Audio());
-
 	useEffect(
 		() => {
-			new Buffer({
-				url: piano,
-				onload: (loadedBuffer) => {
-					console.log("audio loaded");
-					if (!loadedBuffer) return;
-					setBuffers((buffers) => [loadedBuffer, ...buffers]);
-					setBuffersLoaded(true);
-				},
-			});
+			new Audio();
+			loadBuffer(piano);
+			loadBuffer(keyboardClick);
 		},
 		[
 			/* dependency array (läs på)*/
 		]
 	);
+
+	const loadBuffer = (bufferUrl: any) => {
+		new Buffer({
+			url: bufferUrl,
+			onload: (loadedBuffer) => {
+				console.log("audio loaded");
+				if (!loadedBuffer) return;
+				setBuffers((buffers) => [loadedBuffer, ...buffers]);
+				setBuffersLoaded(true);
+			},
+		});
+	};
 
 	// useEffect(()=>{
 	// },[currentPage])
