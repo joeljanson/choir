@@ -13,8 +13,7 @@ import "./App.scss";
 import { Audio } from "./utils/Audio";
 
 // Load audio files
-const piano = require("./audio/clay.mp3");
-const keyboardClick = require("./audio/keyboard-click2.mp3");
+import { piano, keyboardClick } from "./utils/AudioFiles";
 
 export type ComponentBuffer = {
 	bufferUrl: ToneAudioBuffer;
