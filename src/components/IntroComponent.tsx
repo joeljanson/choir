@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import { Channel, UserMedia, start } from "tone";
 import "../css/IntroComponent.scss";
 
+import image from "../assets/image.jpg";
+
 export type IntroComponentProps = {
 	onToneStarted: () => void;
 	onMicAccess: () => void;
@@ -43,10 +45,7 @@ function IntroComponent({
 				className="intro-wrapper"
 			>
 				<div className="intro-content-wrapper">
-					<img
-						alt="From unsplash"
-						src="https://images.unsplash.com/photo-1657828513890-8617428e2214?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80"
-					></img>
+					<img alt="From unsplash" src={image}></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">
 							<h1>Accept things</h1>

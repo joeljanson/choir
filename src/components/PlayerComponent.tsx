@@ -45,7 +45,7 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 				thisPlayer.dispose();
 			},
 			onload: () => {},
-		}).toDestination();
+		}).connect(channel.current);
 		player.start();
 		console.log("Is there a slight latency??");
 		console.log("should sound, click count is: ", clickCount);
@@ -73,8 +73,17 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 			// 	setClickCount(clickCount + 1);
 			// 	setFade(true);
 			// }}
-			onTouchStart={playAudio}
-			onMouseDown={playAudio}
+			onTouchStart={(e) => {
+				e.preventDefault();
+				playAudio();
+			}}
+			onTouchEnd={(e) => {
+				e.preventDefault();
+			}}
+			onMouseDown={(e) => {
+				//e.preventDefault();
+				playAudio();
+			}}
 		>
 			<p>Click anywhere to play sounds</p>
 		</div>

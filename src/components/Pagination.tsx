@@ -28,7 +28,7 @@ function Pagination({
 			</div>
 			<div className="current-page">{currentPage + 1}</div>
 			<div onClick={onNext} className="pagination-button">
-				<h1>Next</h1>
+				<h1>{currentPage < totalCount - 1 ? "Next" : ""}</h1>
 			</div>
 		</div>
 	);

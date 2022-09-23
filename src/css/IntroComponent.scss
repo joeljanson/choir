@@ -1,14 +1,16 @@
 .intro-wrapper {
 	background-color: beige;
-	width: 100vw;
-	height: 100vh;
+	display: flex;
+	min-height: 100%;
+	height: 100%;
+	flex-direction: column;
 }
 
 .intro-content-wrapper {
-	width: 100vw;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	min-height: 100%;
+	height: 100%;
 	img {
 		height: 80%;
 		width: 100%;
