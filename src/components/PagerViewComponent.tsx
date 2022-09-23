@@ -1,5 +1,6 @@
 import { ToneAudioBuffer } from "tone";
 import AudioRecorderComponent from "./AudioRecorderComponent";
+import CanvasComponent from "./CanvasComponent";
 import PlayerComponent from "./PlayerComponent";
 
 type PagerViewProps = {
@@ -15,6 +16,8 @@ function PagerView({ currentPage, buffers }: PagerViewProps) {
 		case 1:
 			return <PlayerComponent key="2" buffer={buffers[1]} />;
 		case 2:
+			return <CanvasComponent />;
+		case 3:
 			return (
 				<AudioRecorderComponent
 					duration={4}
