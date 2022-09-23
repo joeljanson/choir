@@ -2,18 +2,10 @@
 	margin: 0;
 	user-select: none;
 }
-
-.upper-content {
-	height: 80vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+body,
+html,
+#root {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
 }
-
-$red: #c45d41;
-$yellow: #d7ab53;
-$blue: #445974;
-$green: #445f4a;
-$pink: #c28666;
-$white: #e7eeef;
-$black: #1b1a15;

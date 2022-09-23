@@ -36,6 +36,24 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 
 	if (!buffer) return <div>No channel or buffer</div>;
 
+	function playAudio() {
+		const player = new Player({
+			url: buffer,
+			loop: false,
+			onstop: (thisPlayer) => {
+				//player.disconnect(channel.current);
+				thisPlayer.dispose();
+			},
+			onload: () => {},
+		}).toDestination();
+		player.start();
+		console.log("Is there a slight latency??");
+		console.log("should sound, click count is: ", clickCount);
+		console.log("should sound, channel.current is: ", channel.current);
+		setClickCount(clickCount + 1);
+		setFade(true);
+	}
+
 	return (
 		<div
 			className={"upper-content player-component"}
@@ -55,29 +73,8 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 			// 	setClickCount(clickCount + 1);
 			// 	setFade(true);
 			// }}
-			onMouseDown={() => {
-				let firstNow = now();
-				const player = new Player({
-					url: buffer,
-					loop: false,
-					onstop: (thisPlayer) => {
-						//player.disconnect(channel.current);
-						thisPlayer.dispose();
-					},
-					onload: () => {},
-				}).toDestination();
-				player.start();
-				console.log("the time it takes: ", now() - firstNow);
-				console.log("Is there a slight latency??");
-				console.log("should sound, click count is: ", clickCount);
-				console.log("should sound, channel.current is: ", channel.current);
-				setClickCount(clickCount + 1);
-				setFade(true);
-			}}
-			onTransitionEnd={() => {
-				setFade(false);
-				console.log("Animation ended");
-			}}
+			onTouchStart={playAudio}
+			onMouseDown={playAudio}
 		>
 			<p>Click anywhere to play sounds</p>
 		</div>

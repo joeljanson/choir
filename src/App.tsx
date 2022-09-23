@@ -14,7 +14,7 @@ import { Audio } from "./utils/Audio";
 
 // Load audio files
 const piano = require("./audio/clay.mp3");
-const keyboardClick = require("./audio/keyboard-click2.mp3");
+const keyboardClick = require("./audio/keyboard-click.mp3");
 
 export type ComponentBuffer = {
 	bufferUrl: ToneAudioBuffer;
@@ -25,7 +25,7 @@ export type ComponentBuffer = {
 function App() {
 	const [buffers, setBuffers] = useState<ToneAudioBuffer[]>([]);
 	const [hasMicrophoneAccess, setHasMicrophoneAccess] = useState(false);
-	const [wantsMicrophoneAccess] = useState(false);
+	const [wantsMicrophoneAccess] = useState(true);
 	const [toneStarted, setToneStarted] = useState(false);
 	const [buffersLoaded, setBuffersLoaded] = useState(false);
 
