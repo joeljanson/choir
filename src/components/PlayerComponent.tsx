@@ -65,7 +65,7 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 						thisPlayer.dispose();
 					},
 					onload: () => {},
-				}).toDestination();
+				}).connect(channel.current);
 				player.start();
 				console.log("the time it takes: ", now() - firstNow);
 				console.log("Is there a slight latency??");
