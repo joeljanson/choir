@@ -18,12 +18,14 @@ export type AudioRecorderComponentProps = {
 	 * How long the playback of the recording should be delayed, in seconds.
 	 */
 	playbackDelay: number;
+	hasMicAccess: boolean;
 };
 
 function AudioRecorderComponent({
 	recordingDelay,
 	duration,
 	playbackDelay,
+	hasMicAccess,
 }: AudioRecorderComponentProps) {
 	const channel = useRef<Channel>(new Channel());
 	const inputChannel = useRef<Channel>(new Channel());
@@ -109,6 +111,7 @@ function AudioRecorderComponent({
 					? "Will start recording"
 					: "Click to start recording"}
 			</div>
+			<div>{hasMicAccess ? "" : <div>NO MICROPHONE ACCESS</div>}</div>
 		</div>
 	);
 }

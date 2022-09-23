@@ -11,6 +11,7 @@ type MainContentProps = {
 	buffers: ToneAudioBuffer[];
 	setCurrentPage: (page: number) => void;
 	totalCount: number;
+	hasMicAccess: boolean;
 };
 
 function MainContent({
@@ -18,11 +19,16 @@ function MainContent({
 	buffers,
 	setCurrentPage,
 	totalCount,
+	hasMicAccess,
 }: MainContentProps) {
 	return (
 		<div className="main-content-wrapper">
 			<div className="upper-content-wrapper">
-				<PagerView buffers={buffers} currentPage={currentPage} />
+				<PagerView
+					buffers={buffers}
+					currentPage={currentPage}
+					hasMicAccess={hasMicAccess}
+				/>
 			</div>
 			<Pagination
 				currentPage={currentPage}

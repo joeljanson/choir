@@ -6,9 +6,10 @@ import PlayerComponent from "./PlayerComponent";
 type PagerViewProps = {
 	currentPage: number;
 	buffers: ToneAudioBuffer[];
+	hasMicAccess: boolean;
 };
 
-function PagerView({ currentPage, buffers }: PagerViewProps) {
+function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 	console.log("PAGER VIEW", buffers);
 	switch (currentPage) {
 		case 0:
@@ -25,6 +26,7 @@ function PagerView({ currentPage, buffers }: PagerViewProps) {
 					duration={4}
 					recordingDelay={0}
 					playbackDelay={0}
+					hasMicAccess={hasMicAccess}
 				/>
 			);
 		default:

@@ -77,6 +77,7 @@ function App() {
 				setCurrentPage={onSetCurrentPage}
 				buffers={buffers}
 				totalCount={5}
+				hasMicAccess={hasMicrophoneAccess}
 			></MainContent>
 		);
 	return (
