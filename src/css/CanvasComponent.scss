@@ -1,0 +1,9 @@
+.canvas-component {
+	background-color: rgb(79, 79, 79);
+	color: white;
+	width: 100vw;
+	display: flex;
+	canvas {
+		border: 1px solid salmon;
+	}
+}
