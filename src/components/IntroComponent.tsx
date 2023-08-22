@@ -48,7 +48,7 @@ function IntroComponent({
 					<img alt="From unsplash" src={image}></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">
-							<h1>Accept things</h1>
+							<h1>Accept things yes</h1>
 							<div className="intro">
 								Press anywhere to be able to start the piece.
 							</div>
