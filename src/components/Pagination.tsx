@@ -1,4 +1,6 @@
+// import React, { useEffect } from "react";
 import "../css/Pagination.scss";
+import ArrowSvg from "../assets/navigation_arrow_left.svg"; // Adjust the path
 
 type PaginationProps = {
 	currentPage: number;
@@ -24,11 +26,21 @@ function Pagination({
 	return (
 		<div className="pagination-wrapper">
 			<div onClick={onPrevious} className="pagination-button">
-				<h1>{currentPage > 0 ? "Previous" : ""}</h1>
+				<img
+					src={ArrowSvg}
+					alt="Previous"
+					className={`pagination-arrow ${currentPage > 0 ? "visible" : ""}`}
+				/>
 			</div>
 			<div className="current-page">{currentPage + 1}</div>
 			<div onClick={onNext} className="pagination-button">
-				<h1>{currentPage < totalCount - 1 ? "Next" : ""}</h1>
+				<img
+					src={ArrowSvg}
+					alt="Next"
+					className={`rotated-arrow pagination-arrow ${
+						currentPage < totalCount - 1 ? "visible" : ""
+					}`}
+				/>
 			</div>
 		</div>
 	);

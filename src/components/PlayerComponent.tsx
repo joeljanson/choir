@@ -22,9 +22,35 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 		channel.current.volume.rampTo(gainToDb(1), 0.1);
 		const currChannel = channel.current;
 		return () => {
-			currChannel.volume.rampTo(gainToDb(0), 0.1);
-			currChannel.dispose();
+			currChannel.volume.rampTo(gainToDb(0), 10.1);
+			// currChannel.dispose();
 			console.log("Component unmounted, cleanup?", currChannel);
+		};
+	}, []);
+
+	const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+	useEffect(() => {
+		// Detect if the device is a touch device
+		const detectTouchDevice = () => {
+			if ("ontouchstart" in window) {
+				setIsTouchDevice(true);
+			} else {
+				setIsTouchDevice(false);
+			}
+		};
+
+		// Call the detection function when the component mounts
+		detectTouchDevice();
+
+		// You can also listen for changes in orientation or screen size
+		window.addEventListener("orientationchange", detectTouchDevice);
+		window.addEventListener("resize", detectTouchDevice);
+
+		// Remove the event listeners when the component unmounts
+		return () => {
+			window.removeEventListener("orientationchange", detectTouchDevice);
+			window.removeEventListener("resize", detectTouchDevice);
 		};
 	}, []);
 
@@ -56,7 +82,7 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 
 	return (
 		<div
-			className={"upper-content player-component"}
+			className={"player-component"}
 			// tabIndex={0}
 			// onKeyDown={() => {
 			// 	const player = new Player({
@@ -73,19 +99,10 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 			// 	setClickCount(clickCount + 1);
 			// 	setFade(true);
 			// }}
-			onTouchStart={(e) => {
-				e.preventDefault();
-				playAudio();
-			}}
-			onTouchEnd={(e) => {
-				e.preventDefault();
-			}}
-			onMouseDown={(e) => {
-				//e.preventDefault();
-				playAudio();
-			}}
+			onTouchStart={isTouchDevice ? playAudio : undefined}
+			onMouseDown={!isTouchDevice ? playAudio : undefined}
 		>
-			<p>Click anywhere to play sounds</p>
+			<p>{isTouchDevice ? "Press" : "Click"} anywhere to play sounds</p>
 		</div>
 	);
 }

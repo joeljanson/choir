@@ -2,6 +2,7 @@ import { ToneAudioBuffer } from "tone";
 import AudioRecorderComponent from "./AudioRecorderComponent";
 import CanvasComponent from "./CanvasComponent";
 import PlayerComponent from "./PlayerComponent";
+import BaseComponent from "./BaseComponent";
 
 type PagerViewProps = {
 	currentPage: number;
@@ -13,12 +14,24 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 	console.log("PAGER VIEW", buffers);
 	switch (currentPage) {
 		case 0:
-			return <PlayerComponent key="1" buffer={buffers[0]} />;
+			return (
+				<BaseComponent
+					components={[
+						<PlayerComponent key="1" buffer={buffers[0]} />,
+						<PlayerComponent key="1" buffer={buffers[1]} />,
+						<CanvasComponent />,
+					]}
+					upperComponentHeight="66%"
+				></BaseComponent>
+			);
 		case 1:
-			return <PlayerComponent key="2" buffer={buffers[1]} />;
+			return (
+				<BaseComponent
+					components={<CanvasComponent />}
+					upperComponentHeight="100%"
+				></BaseComponent>
+			);
 		case 2:
-			return <CanvasComponent />;
-		case 4:
 			return <CanvasComponent />;
 		case 3:
 			return (
@@ -29,6 +42,8 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 					hasMicAccess={hasMicAccess}
 				/>
 			);
+		case 4:
+			return <CanvasComponent />;
 		default:
 			return <div>Sidan finns ej</div>;
 	}

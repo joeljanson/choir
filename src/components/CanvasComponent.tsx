@@ -61,7 +61,7 @@ function CanvasComponent() {
 	}, []);
 
 	return (
-		<div className={"upper-content canvas-component"}>
+		<div className={"canvas-component"}>
 			<canvas ref={canvasRef} />
 		</div>
 	);

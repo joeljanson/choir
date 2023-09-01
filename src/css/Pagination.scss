@@ -4,7 +4,8 @@
 	justify-content: center;
 	align-items: center;
 
-	background-color: rgb(255, 196, 0);
+	color: white;
+	background-color: rgb(31, 31, 31);
 	.pagination-button {
 		display: flex;
 		justify-content: center;
@@ -14,6 +15,19 @@
 	}
 	.current-page {
 		font-size: 32px;
+	}
+	// In your CSS file
+	.rotated-arrow {
+		transform: rotate(180deg);
+	}
+
+	.pagination-arrow {
+		opacity: 0;
+		transition: opacity 0.3s ease; /* Smooth opacity transition */
+	}
+
+	.pagination-arrow.visible {
+		opacity: 1;
 	}
 
 	h1 {
