@@ -3,6 +3,7 @@ import { Channel, UserMedia, start } from "tone";
 import "../css/IntroComponent.scss";
 
 import image from "../assets/image.jpg";
+//import image from "https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg";
 
 export type IntroComponentProps = {
 	onToneStarted: () => void;
@@ -48,7 +49,7 @@ function IntroComponent({
 					<img alt="From unsplash" src={image}></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">
-							<h1>Accept things yes</h1>
+							<h1>Accept access</h1>
 							<div className="intro">
 								Press anywhere to be able to start the piece.
 							</div>
