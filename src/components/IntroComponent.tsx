@@ -46,7 +46,10 @@ function IntroComponent({
 				className="intro-wrapper"
 			>
 				<div className="intro-content-wrapper">
-					<img alt="From unsplash" src={image}></img>
+					<img
+						alt="From unsplash"
+						src="https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg"
+					></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">
 							<h1>Accept access</h1>
