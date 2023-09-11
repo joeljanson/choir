@@ -3,6 +3,7 @@ import AudioRecorderComponent from "./AudioRecorderComponent";
 import CanvasComponent from "./CanvasComponent";
 import PlayerComponent from "./PlayerComponent";
 import BaseComponent from "./BaseComponent";
+import ScrollTrackingDiv from "./ScrollTrackingComponent";
 
 type PagerViewProps = {
 	currentPage: number;
@@ -17,9 +18,10 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 			return (
 				<BaseComponent
 					components={[
-						<PlayerComponent key="1" buffer={buffers[0]} />,
-						<PlayerComponent key="1" buffer={buffers[1]} />,
-						<CanvasComponent />,
+						// <PlayerComponent key="1" buffer={buffers[0]} />,
+						// <PlayerComponent key="1" buffer={buffers[1]} />,
+						// <CanvasComponent />,
+						<ScrollTrackingDiv></ScrollTrackingDiv>,
 					]}
 					upperComponentHeight="66%"
 				></BaseComponent>

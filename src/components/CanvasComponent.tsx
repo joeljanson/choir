@@ -15,17 +15,37 @@ function CanvasComponent() {
 
 	useEffect(() => {
 		if (!canvasRef) return;
+
+		// Get the parent element's size
+		const parentElement = canvasRef.current.parentElement;
+		if (!parentElement) return;
+
 		const canvas = canvasRef.current;
+		// Set canvas dimensions to match the parent's size
+		canvasRef.current.width = parentElement.clientWidth;
+		canvasRef.current.height = parentElement.clientHeight;
 		const context = canvas.getContext("2d");
 		let frameCount = 0;
 		let animationFrameId: number;
 
 		const rad = 14;
-		const width = 302;
-		const height = 152;
+		const width = parentElement.clientWidth;
+		const height = parentElement.clientHeight;
 		let balls = [
-			new Ball(0, 0, rad, width, height),
-			new Ball(50, 50, rad, width, height),
+			new Ball(
+				Math.random() * width,
+				Math.random() * height,
+				rad,
+				width,
+				height
+			),
+			new Ball(
+				Math.random() * width,
+				Math.random() * height,
+				rad,
+				width,
+				height
+			),
 		];
 
 		//Our draw came here
@@ -62,6 +82,7 @@ function CanvasComponent() {
 
 	return (
 		<div className={"canvas-component"}>
+			<p>hello hohoh oahegoh</p>
 			<canvas ref={canvasRef} />
 		</div>
 	);
