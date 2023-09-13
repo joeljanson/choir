@@ -1,7 +1,7 @@
 import { ToneAudioBuffer } from "tone";
 import AudioRecorderComponent from "./AudioRecorderComponent";
 import CanvasComponent from "./CanvasComponent";
-import PlayerComponent from "./PlayerComponent";
+//import PlayerComponent from "./PlayerComponent";
 import BaseComponent from "./BaseComponent";
 import ScrollTrackingDiv from "./ScrollTrackingComponent";
 
@@ -18,10 +18,11 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 			return (
 				<BaseComponent
 					components={[
-						<PlayerComponent key="1" buffer={buffers[0]} />,
-						<PlayerComponent key="1" buffer={buffers[1]} />,
-						<CanvasComponent />,
-						// <ScrollTrackingDiv></ScrollTrackingDiv>,
+						// <PlayerComponent key="1" buffer={buffers[0]} />,
+						// <PlayerComponent key="1" buffer={buffers[1]} />,
+						// <CanvasComponent />,
+						//<ScrollSpeed></ScrollSpeed>,
+						<ScrollTrackingDiv></ScrollTrackingDiv>,
 					]}
 					upperComponentHeight="66%"
 				></BaseComponent>

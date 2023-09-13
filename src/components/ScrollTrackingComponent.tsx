@@ -1,52 +1,48 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Player, Volume, gainToDb, start } from "tone";
+import { Player, Volume, gainToDb } from "tone";
 import { ljudbild4 } from "../utils/AudioFiles";
+
+import "../css/ScrollTracking.scss";
 
 const ScrollTrackingDiv: React.FC = () => {
 	const divRef = useRef<HTMLDivElement>(null);
 	const myVol = useRef<Volume | null>(null);
+	const player = useRef<Player | null>(null);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
 	const [scrollVelocity, setScrollVelocity] = useState<number>(0);
-	const [lastScrollTop, setLastScrollTop] = useState<number>(0);
 
 	// Function to handle scroll events
 	const handleScroll = () => {
 		if (divRef.current) {
-			// Calculate the current scroll position
-			const currentPosition = divRef.current.scrollTop;
+			// Just update the current scroll position
+			const newScrollPosition = divRef.current.scrollTop;
+			setScrollPosition(newScrollPosition);
 
-			// Calculate the change in scroll position since the last scroll event
-			const scrollChange = currentPosition - lastScrollTop;
-
-			// Calculate the scroll velocity as a value between 0 and 1
-			// You can adjust the factor (e.g., 0.01) to control the sensitivity
-			const velocity = Math.abs(scrollChange) * 0.1;
-
-			// Update the state with the current scroll position and velocity
-			setScrollPosition(currentPosition);
-			setScrollVelocity(velocity);
-
-			// Store the current scroll position as the last known scroll position
-			setLastScrollTop(currentPosition);
+			if (newScrollPosition > 10000) {
+				console.log("Scroll bigger than 10000!");
+			}
 		}
 	};
 
 	useEffect(() => {
-		if (divRef.current) {
+		const currentDivNode = divRef.current;
+
+		if (currentDivNode) {
 			// Add scroll event listener when the component mounts
-			divRef.current.addEventListener("scroll", handleScroll);
-			const volume = new Volume(-6).toDestination();
-			myVol.current = volume; //This is not working, it says that current is a read-only?
+			currentDivNode.addEventListener("scroll", handleScroll);
+			const volume = new Volume(-Infinity).toDestination();
+			myVol.current = volume;
 			console.log(ljudbild4);
-			const player = new Player(ljudbild4, () => {
+			const intPlayer = new Player(ljudbild4, () => {
 				console.log("Ljudbild Audio loaded");
-				player.start();
-				player.loop = true;
+				intPlayer.start();
+				intPlayer.loop = true;
 			}).connect(volume);
+			player.current = intPlayer;
 
 			// Clean up the listener when the component unmounts
 			return () => {
-				divRef.current!.removeEventListener("scroll", handleScroll);
+				currentDivNode.removeEventListener("scroll", handleScroll);
 			};
 		}
 	}, []);
@@ -54,27 +50,53 @@ const ScrollTrackingDiv: React.FC = () => {
 	useEffect(() => {
 		// Use requestAnimationFrame to continually track velocity even when not scrolling
 		let animationFrameId: number;
+		const lerpFactor = 0.05; // You can adjust this to change the speed of interpolation
+		let lastFrameVelocity = 0; // To store the velocity of the last frame
+		let lastFramePosition = 0; // To store the velocity of the last frame
+
+		const mapValue = (
+			input: number,
+			inputStart: number,
+			inputEnd: number,
+			outputStart: number,
+			outputEnd: number
+		) => {
+			const inputRange = inputEnd - inputStart;
+			const outputRange = outputEnd - outputStart;
+
+			return ((input - inputStart) * outputRange) / inputRange + outputStart;
+		};
 
 		const trackVelocity = () => {
 			// Calculate the change in scroll position since the last frame
-			const scrollChange = scrollPosition - lastScrollTop;
+			const scrollChange = scrollPosition - lastFramePosition;
 
 			// Calculate the scroll velocity as a value between 0 and 1
 			// You can adjust the factor (e.g., 0.01) to control the sensitivity
 			let velocity = Math.abs(scrollChange) * 0.01;
+			//console.log("Scrollposition is: ", scrollPosition);
+			// Lerp the velocity value
+			velocity = (1 - lerpFactor) * lastFrameVelocity + lerpFactor * velocity;
+
+			lastFrameVelocity = velocity;
+			lastFramePosition = scrollPosition;
+			const mappedVelocity = mapValue(velocity, 0, 10, 0, 1);
+			//console.log(mappedVelocity);
 
 			if (velocity > 0) {
-				if (velocity < 0.2) {
-					velocity = 0;
+				//console.log(gainToDb(velocity));
+				const vol = mappedVelocity > 1 ? 1 : mappedVelocity;
+				//let playbackRate = mappedVelocity > 1 ? 1 : mappedVelocity;
+				//playbackRate = playbackRate < 0.5 ? 0.5 : playbackRate;
+				myVol.current?.volume.rampTo(gainToDb(vol), 1);
+				if (player.current) {
+					/*player.current._activeSources.forEach((source: any) => {
+						source.playbackRate.rampTo(playbackRate, 10);
+					});*/
 				}
-				console.log(gainToDb(velocity));
-				myVol.current?.volume.rampTo(gainToDb(velocity), 1);
 			}
 			// Update the state with the current velocity
 			setScrollVelocity(velocity);
-
-			// Store the current scroll position as the last known scroll position
-			setLastScrollTop(scrollPosition);
 
 			// Request the next animation frame
 			animationFrameId = requestAnimationFrame(trackVelocity);
@@ -87,15 +109,17 @@ const ScrollTrackingDiv: React.FC = () => {
 		return () => {
 			cancelAnimationFrame(animationFrameId);
 		};
-	}, [scrollPosition, lastScrollTop]);
+	}, [scrollPosition]);
 
 	return (
-		<div ref={divRef} style={{ height: "300px", overflow: "scroll" }}>
+		<div className="infinite-scrollbar">
 			{/* Content with a large scrollable height */}
-			<div style={{ height: "10000000px" }}>
+			<div className="scroll-content" ref={divRef}>
 				Scroll Position: {scrollPosition}px
 				<br />
 				Scroll Velocity: {scrollVelocity.toFixed(2)}
+				<div style={{ height: "10000px", backgroundColor: "coral" }}>HEJ</div>
+				<div style={{ height: "10000px", backgroundColor: "blue" }}>HEJ</div>
 			</div>
 		</div>
 	);
