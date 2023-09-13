@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Player, Channel, Recorder } from "tone";
+import { Player, Channel, Buffer, Recorder } from "tone";
 import { inputs, outputs } from "../utils/constants";
+import { normalize } from "../utils/Audio";
 
 //Import scss
 import "../css/AudioRecorder.scss";
@@ -40,7 +41,7 @@ function AudioRecorderComponent({
 		inputChannel.current.connect(recorder.current);
 
 		channel.current.send(outputs.channel1, 0);
-		channel.current.volume.rampTo(-6, 0.1);
+		channel.current.volume.rampTo(0, 0.1);
 		return () => {
 			console.log("Component unmounted, cleanup?", channel.current);
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,18 +60,26 @@ function AudioRecorderComponent({
 		recorder.current.stop().then((recording) => {
 			const url = URL.createObjectURL(recording);
 			console.log("Recording finished, url is: ", url);
-			const player = new Player({
+			const newBuffer = new Buffer({
 				url: url,
-				loop: false,
-				onload: () => {
-					console.log("buffer loaded");
+				onload: (loadedBuffer) => {
+					console.log("loaded buffer");
+					const normalizedBuffer = normalize(newBuffer);
+					console.log("normalized buffer: ", normalizedBuffer);
+					const player = new Player({
+						url: normalizedBuffer,
+						loop: false,
+						onload: () => {
+							console.log("buffer loaded");
+						},
+						onstop: () => {
+							player.dispose();
+						},
+					});
 					player.start(playbackDelay);
-				},
-				onstop: () => {
-					player.dispose();
+					player.connect(channel.current);
 				},
 			});
-			player.connect(channel.current);
 		});
 		setRecording(false);
 	}

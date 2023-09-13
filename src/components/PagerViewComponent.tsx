@@ -35,18 +35,33 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 				></BaseComponent>
 			);
 		case 2:
-			return <CanvasComponent />;
+			return (
+				<BaseComponent
+					components={<CanvasComponent />}
+					upperComponentHeight="100%"
+				></BaseComponent>
+			);
 		case 3:
 			return (
-				<AudioRecorderComponent
-					duration={4}
-					recordingDelay={0}
-					playbackDelay={0}
-					hasMicAccess={hasMicAccess}
-				/>
+				<BaseComponent
+					components={
+						<AudioRecorderComponent
+							duration={30}
+							recordingDelay={0}
+							playbackDelay={0}
+							hasMicAccess={hasMicAccess}
+						/>
+					}
+					upperComponentHeight="100%"
+				></BaseComponent>
 			);
 		case 4:
-			return <CanvasComponent />;
+			return (
+				<BaseComponent
+					components={<CanvasComponent />}
+					upperComponentHeight="100%"
+				></BaseComponent>
+			);
 		default:
 			return <div>Sidan finns ej</div>;
 	}

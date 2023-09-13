@@ -1,5 +1,6 @@
+@use "./colors";
 .audio-recorder {
-	background-color: olivedrab;
+	background-color: colors.$figma_green;
 	display: flex;
 	height: 100%;
 	justify-content: center;
