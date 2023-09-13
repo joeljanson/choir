@@ -5,6 +5,7 @@ import Pagination from "./Pagination";
 import "../css/MainContent.scss";
 import PagerView from "./PagerViewComponent";
 import { ToneAudioBuffer } from "tone";
+import TopBar from "./TopBar";
 
 type MainContentProps = {
 	currentPage: number;
@@ -23,6 +24,7 @@ function MainContent({
 }: MainContentProps) {
 	return (
 		<div className="main-content-wrapper">
+			<TopBar name="DECAY"></TopBar>
 			<div className="upper-content-wrapper">
 				<PagerView
 					buffers={buffers}
