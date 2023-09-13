@@ -1,5 +1,5 @@
 //Import external libraries
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Buffer, ToneAudioBuffer } from "tone";
 
 //Components

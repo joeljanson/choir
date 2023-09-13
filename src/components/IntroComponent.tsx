@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Channel, UserMedia, start } from "tone";
 import "../css/IntroComponent.scss";
 
-import image from "../assets/image.jpg";
+//import image from "../assets/image.jpg";
 //import image from "https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg";
 
 export type IntroComponentProps = {
