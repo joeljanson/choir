@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Player, Volume, gainToDb } from "tone";
-import { ljudbild4 } from "../utils/AudioFiles";
+import { adagio, ljudbild4 } from "../utils/AudioFiles";
+import { everything } from "../utils/AudioFiles";
 
 import "../css/ScrollTracking.scss";
+import DroneGrainPlayer from "../utils/DroneGrainPlayer";
 
 const ScrollTrackingDiv: React.FC = () => {
 	const divRef = useRef<HTMLDivElement>(null);
 	const myVol = useRef<Volume | null>(null);
-	const player = useRef<Player | null>(null);
+	const player = useRef<DroneGrainPlayer | null>(null);
 	const lastFrameVelocity = useRef<number>(0); // To store the velocity of the last frame
 	const lastFramePosition = useRef<number>(0); // To store the position of the last frame
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -21,14 +23,12 @@ const ScrollTrackingDiv: React.FC = () => {
 			setScrollPosition(newScrollPosition);
 
 			if (newScrollPosition > 10000) {
-				console.log("Scroll bigger than 10000!");
+				//console.log("Scroll bigger than 10000!");
 			}
 			const scrollPosition = newScrollPosition;
 			const parallaxElement = document.getElementById("parallax");
 			if (parallaxElement) {
-				parallaxElement.style.position = "absolute";
-				//parallaxElement.style.top = `${scrollPosition * 0.0001}px`;
-				//parallaxElement.style.left = `${scrollPosition * 0.0001}px`;
+				//parallaxElement.style.top = `${100 - scrollPosition * 0.005}px`;
 				parallaxElement.style.top = `${100 - scrollPosition * 0.005}px`;
 			}
 		}
@@ -42,11 +42,17 @@ const ScrollTrackingDiv: React.FC = () => {
 			currentDivNode.addEventListener("scroll", handleScroll);
 			const volume = new Volume(-Infinity).toDestination();
 			myVol.current = volume;
-			console.log(ljudbild4);
-			const intPlayer = new Player(ljudbild4, () => {
-				console.log("Ljudbild Audio loaded");
-				intPlayer.start();
-				intPlayer.loop = true;
+			const intPlayer = new DroneGrainPlayer({
+				url: adagio,
+				frequency: 0.1, // Maybe change these into global variables?
+				grainSize: 0.5, // Maybe change these into global variables?
+				overlap: 0.1,
+				loop: true,
+				onload: () => {
+					console.log("Ljudbild Audio loaded");
+					//intPlayer.playbackRate = 1;
+					intPlayer.start();
+				},
 			}).connect(volume);
 			player.current = intPlayer;
 
@@ -100,10 +106,18 @@ const ScrollTrackingDiv: React.FC = () => {
 			if (velocity > 0) {
 				//console.log(gainToDb(velocity));
 				const vol = mappedVelocity > 1 ? 1 : mappedVelocity;
-				//let playbackRate = mappedVelocity > 1 ? 1 : mappedVelocity;
-				//playbackRate = playbackRate < 0.5 ? 0.5 : playbackRate;
+				let playbackRate = mappedVelocity > 1 ? 1 : mappedVelocity;
+				playbackRate = playbackRate < 0.5 ? 0.5 : playbackRate;
 				myVol.current?.volume.rampTo(gainToDb(vol), 1);
 				if (player.current) {
+					const position =
+						(lastFramePosition.current / 1000000) *
+						player.current.buffer.duration;
+					//console.log(position);
+					player.current.updateScrubPosition(position);
+					//player.current.playbackRate = playbackRate;
+					//player.current.start(0, position);
+					//console.log(playbackRate);
 					/*player.current._activeSources.forEach((source: any) => {
 						source.playbackRate.rampTo(playbackRate, 10);
 					});*/

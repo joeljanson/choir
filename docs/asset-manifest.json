@@ -1,20 +1,22 @@
 {
   "files": {
-    "main.css": "/choir/static/css/main.8f2ca406.css",
-    "main.js": "/choir/static/js/main.5a4a479b.js",
+    "main.css": "/choir/static/css/main.1a30b65a.css",
+    "main.js": "/choir/static/js/main.e05cdf77.js",
     "static/js/787.1ad04248.chunk.js": "/choir/static/js/787.1ad04248.chunk.js",
+    "static/media/Adagio.wav": "/choir/static/media/Adagio.ce50163dc468d2bc3fdf.wav",
+    "static/media/everything-vox.mp3": "/choir/static/media/everything-vox.79a68914cdef0b986fa0.mp3",
     "static/media/ljudbild4.mp3": "/choir/static/media/ljudbild4.e123eb0f036467fa4dfe.mp3",
     "static/media/a1.mp3": "/choir/static/media/a1.ce852a040693b1b08645.mp3",
     "static/media/clay.mp3": "/choir/static/media/clay.75a809c06ef47758e09d.mp3",
     "static/media/keyboard-click.mp3": "/choir/static/media/keyboard-click.f76bf27afc018df4ac3b.mp3",
     "index.html": "/choir/index.html",
     "static/media/navigation_arrow_left.svg": "/choir/static/media/navigation_arrow_left.f8ab2a1a0bba068afe63eef2f9ebcc74.svg",
-    "main.8f2ca406.css.map": "/choir/static/css/main.8f2ca406.css.map",
-    "main.5a4a479b.js.map": "/choir/static/js/main.5a4a479b.js.map",
+    "main.1a30b65a.css.map": "/choir/static/css/main.1a30b65a.css.map",
+    "main.e05cdf77.js.map": "/choir/static/js/main.e05cdf77.js.map",
     "787.1ad04248.chunk.js.map": "/choir/static/js/787.1ad04248.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8f2ca406.css",
-    "static/js/main.5a4a479b.js"
+    "static/css/main.1a30b65a.css",
+    "static/js/main.e05cdf77.js"
   ]
 }

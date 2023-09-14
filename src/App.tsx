@@ -1,93 +1,46 @@
 //Import external libraries
-import React, { useEffect, useState } from "react";
-import { Buffer, ToneAudioBuffer } from "tone";
-
-//Components
-import IntroComponent from "./components/IntroComponent";
-import MainContent from "./components/MainContent";
+import React, { useState, useEffect } from "react";
 
 //Load CSS
 import "./App.scss";
 
-// Setup audio mixer
-import { Audio } from "./utils/Audio";
+import Decay from "./components/Decay/Decay";
 
-// Load audio files
-import { piano, keyboardClick } from "./utils/AudioFiles";
-
-export type ComponentBuffer = {
-	bufferUrl: ToneAudioBuffer;
-	playlistBehaviour: "auto" | "none";
-	name: string;
+const isMobileDevice = () => {
+	return window.innerWidth <= 768; // You can adjust this threshold as needed
 };
 
 function App() {
-	const [buffers, setBuffers] = useState<ToneAudioBuffer[]>([]);
-	const [hasMicrophoneAccess, setHasMicrophoneAccess] = useState(false);
-	const [wantsMicrophoneAccess] = useState(false);
-	const [toneStarted, setToneStarted] = useState(false);
-	const [buffersLoaded, setBuffersLoaded] = useState(false);
+	const [isPortrait, setIsPortrait] = useState<boolean>(true);
 
-	const [currentPage, setCurrentPage] = useState(0);
+	useEffect(() => {
+		const handleOrientationChange = () => {
+			setIsPortrait(window.innerWidth < window.innerHeight);
+		};
 
-	useEffect(
-		() => {
-			new Audio();
-			loadBuffer(piano);
-			loadBuffer(keyboardClick);
-		},
-		[
-			/* dependency array (läs på)*/
-		]
-	);
+		console.log(window.innerWidth < window.innerHeight);
 
-	const loadBuffer = (bufferUrl: any) => {
-		new Buffer({
-			url: bufferUrl,
-			onload: (loadedBuffer) => {
-				console.log("audio loaded");
-				if (!loadedBuffer) return;
-				setBuffers((buffers) => [loadedBuffer, ...buffers]);
-				setBuffersLoaded(true);
-			},
-		});
-	};
+		// Initial check
+		handleOrientationChange();
 
-	// useEffect(()=>{
-	// },[currentPage])
-	const onMicAccess = () => {
-		setHasMicrophoneAccess(true);
-	};
+		window.addEventListener("resize", handleOrientationChange);
 
-	const onToneStarted = () => {
-		setToneStarted(true);
-	};
+		return () => {
+			window.removeEventListener("resize", handleOrientationChange);
+		};
+	}, []);
 
-	const onSetCurrentPage = (page: number) => {
-		setCurrentPage(page);
-	};
-
-	if (
-		(wantsMicrophoneAccess && hasMicrophoneAccess && buffersLoaded) ||
-		(!wantsMicrophoneAccess && toneStarted && buffersLoaded)
-	)
-		return (
-			<MainContent
-				currentPage={currentPage}
-				setCurrentPage={onSetCurrentPage}
-				buffers={buffers}
-				totalCount={5}
-				hasMicAccess={hasMicrophoneAccess}
-			></MainContent>
-		);
 	return (
-		<IntroComponent
-			wantsMicAccess={wantsMicrophoneAccess}
-			hasMicAccess={hasMicrophoneAccess}
-			onMicAccess={onMicAccess}
-			onToneStarted={onToneStarted}
-			toneStarted={toneStarted}
-		/>
+		<div className="app-container">
+			<Decay />
+			{isPortrait === false && (
+				<div className="overlay">
+					<div className="overlay-message">
+						This website requires portrait orientation on mobile devices.
+					</div>
+				</div>
+			)}
+		</div>
 	);
 }
 

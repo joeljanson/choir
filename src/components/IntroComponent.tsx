@@ -11,12 +11,14 @@ export type IntroComponentProps = {
 	hasMicAccess: boolean;
 	wantsMicAccess: boolean;
 	toneStarted: boolean;
+	pieceName: string;
 };
 
 function IntroComponent({
 	onMicAccess,
 	onToneStarted,
 	wantsMicAccess,
+	pieceName,
 }: IntroComponentProps) {
 	const mic = useRef<UserMedia>(new UserMedia());
 	const channel = useRef<Channel>(new Channel());
@@ -52,7 +54,7 @@ function IntroComponent({
 					></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">
-							<h1>Accept access</h1>
+							<h1>{pieceName}</h1>
 							<div className="intro">
 								Press anywhere to be able to start the piece.
 							</div>
