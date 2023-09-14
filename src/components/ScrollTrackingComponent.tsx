@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Player, Volume, gainToDb } from "tone";
 import { adagio, ljudbild4 } from "../utils/AudioFiles";
-import { everything } from "../utils/AudioFiles";
 
 import "../css/ScrollTracking.scss";
 import DroneGrainPlayer from "../utils/DroneGrainPlayer";
