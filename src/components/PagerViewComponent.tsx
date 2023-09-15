@@ -16,16 +16,19 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 	switch (currentPage) {
 		case 0:
 			return (
-				<BaseComponent
-					components={[
-						// <PlayerComponent key="1" buffer={buffers[0]} />,
-						// <PlayerComponent key="1" buffer={buffers[1]} />,
-						// <CanvasComponent />,
-						//<ScrollSpeed></ScrollSpeed>,
-						<ScrollTrackingDiv></ScrollTrackingDiv>,
-					]}
-					upperComponentHeight="66%"
-				></BaseComponent>
+				<div>
+					<BaseComponent
+						components={[
+							// <PlayerComponent key="1" buffer={buffers[0]} />,
+							// <PlayerComponent key="1" buffer={buffers[1]} />,
+							// <CanvasComponent />,
+							//<ScrollSpeed></ScrollSpeed>,
+							<ScrollTrackingDiv></ScrollTrackingDiv>,
+						]}
+						upperComponentHeight="66%"
+					></BaseComponent>
+					<button style={{ flexGrow: 1 }}>HEJ!</button>
+				</div>
 			);
 		case 1:
 			return (

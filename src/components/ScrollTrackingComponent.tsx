@@ -37,6 +37,10 @@ const ScrollTrackingDiv: React.FC = () => {
 		const currentDivNode = divRef.current;
 
 		if (currentDivNode) {
+			// setTimeout(() => {
+			// 	console.log("Setting scrolltop!");
+			// 	currentDivNode.scrollTop = 500000;
+			// }, 1000);
 			// Add scroll event listener when the component mounts
 			currentDivNode.addEventListener("scroll", handleScroll);
 			const volume = new Volume(-Infinity).toDestination();
@@ -81,6 +85,9 @@ const ScrollTrackingDiv: React.FC = () => {
 		};
 
 		const trackVelocity = () => {
+			if (scrollPosition <= 0) {
+				return;
+			}
 			// Calculate the change in scroll position since the last frame
 			const scrollChange = scrollPosition - lastFramePosition.current;
 
@@ -99,14 +106,14 @@ const ScrollTrackingDiv: React.FC = () => {
 			lastFrameVelocity.current = velocity;
 			lastFramePosition.current = scrollPosition;
 
-			const mappedVelocity = mapValue(velocity, 0, 1, 0, 1);
+			const mappedVelocity = mapValue(velocity, 0, 1, 0.5, 1);
 			//console.log(mappedVelocity);
 
 			if (velocity > 0) {
 				//console.log(gainToDb(velocity));
 				const vol = mappedVelocity > 1 ? 1 : mappedVelocity;
-				let playbackRate = mappedVelocity > 1 ? 1 : mappedVelocity;
-				playbackRate = playbackRate < 0.5 ? 0.5 : playbackRate;
+				// let playbackRate = mappedVelocity > 1 ? 1 : mappedVelocity;
+				// playbackRate = playbackRate < 0.5 ? 0.5 : playbackRate;
 				myVol.current?.volume.rampTo(gainToDb(vol), 1);
 				if (player.current) {
 					const position =

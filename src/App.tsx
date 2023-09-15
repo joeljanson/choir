@@ -11,7 +11,9 @@ const isMobileDevice = () => {
 };
 
 function App() {
-	const [isPortrait, setIsPortrait] = useState<boolean>(true);
+	const [isPortrait, setIsPortrait] = useState<boolean>(
+		window.innerWidth < window.innerHeight
+	);
 
 	useEffect(() => {
 		const handleOrientationChange = () => {
@@ -24,22 +26,22 @@ function App() {
 		handleOrientationChange();
 
 		window.addEventListener("resize", handleOrientationChange);
+		window.addEventListener("orientationchange", handleOrientationChange);
 
 		return () => {
 			window.removeEventListener("resize", handleOrientationChange);
+			window.addEventListener("orientationchange", handleOrientationChange);
 		};
 	}, []);
 
 	return (
 		<div className="app-container">
 			<Decay />
-			{isPortrait === false && (
-				<div className="overlay">
-					<div className="overlay-message">
-						This website requires portrait orientation on mobile devices.
-					</div>
+			<div className={`overlay ${isPortrait ? "hidden" : ""}`}>
+				<div className="overlay-message">
+					This website requires portrait orientation on mobile devices.
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }
