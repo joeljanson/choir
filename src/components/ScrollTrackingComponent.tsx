@@ -4,6 +4,9 @@ import { adagio, ljudbild4 } from "../utils/AudioFiles";
 
 import "../css/ScrollTracking.scss";
 import DroneGrainPlayer from "../utils/DroneGrainPlayer";
+import VideoPlayer from "./Video";
+
+const roses = require("../assets/roses.mp4");
 
 const ScrollTrackingDiv: React.FC = () => {
 	const divRef = useRef<HTMLDivElement>(null);
@@ -220,6 +223,7 @@ const ScrollTrackingDiv: React.FC = () => {
 						alt="From unsplash"
 						src="https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg"
 					></img>
+					<VideoPlayer src={roses} />
 					When I walk alone, the consequences of every good or bad choice I make
 					fall entirely on me: a responsibility and a freedom. As a woman and a
 					mother, I rarely only have to consider what I want and need without
