@@ -27,7 +27,6 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 						]}
 						upperComponentHeight="66%"
 					></BaseComponent>
-					<button style={{ flexGrow: 1 }}>HEJ!</button>
 				</div>
 			);
 		case 1:

@@ -1,9 +1,11 @@
 @use "colors";
+@use "sizes";
 .top-bar-wrapper {
 	background-color: colors.$grey;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 30px 25px 10px;
+	height: sizes.$top_bar_height;
 	color: colors.$white;
 }

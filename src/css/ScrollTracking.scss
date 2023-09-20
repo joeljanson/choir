@@ -1,7 +1,12 @@
+@use "colors";
+@use "sizes";
 .infinite-scrollbar {
-	max-height: 50vh;
-	min-height: 40vh;
-	height: 100%;
+	max-height: calc(
+		100vh - (sizes.$top_bar_height + sizes.$pagination_height) - 60px
+	);
+	height: calc(
+		100vh - (sizes.$top_bar_height + sizes.$pagination_height) - 60px
+	);
 	overflow: hidden;
 	position: relative;
 	.scroll-content {
@@ -27,6 +32,20 @@
 		transition: top 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 		> * {
 			padding-bottom: 20px;
+		}
+	}
+}
+
+svg {
+	width: 100%;
+	color: colors.$notes;
+	g {
+		fill: colors.$notes;
+		text {
+			fill: colors.$notes;
+		}
+		polyline {
+			stroke: colors.$notes;
 		}
 	}
 }

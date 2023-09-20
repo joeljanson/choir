@@ -1,6 +1,7 @@
+@use "sizes";
 .pagination-wrapper {
 	display: flex;
-	height: 100px;
+	height: sizes.$pagination_height;
 	justify-content: center;
 	align-items: center;
 
