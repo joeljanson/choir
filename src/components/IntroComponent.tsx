@@ -50,7 +50,7 @@ function IntroComponent({
 				<div className="intro-content-wrapper">
 					<img
 						alt="From unsplash"
-						src="https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg"
+						src="https://images.unsplash.com/photo-1570450483095-80261f758e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2957&q=80"
 					></img>
 					<div className="intro-content-text-area">
 						<div className="text-content">

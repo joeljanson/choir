@@ -175,20 +175,43 @@ const ScrollTrackingDiv: React.FC = () => {
 				</div> */}
 				<div id="parallax">
 					<p>
-						Unless absence. I remember how the days were long and the rain was
-						soft.
+						Här kommer det vara en lång inledande text som ger sångarna lite
+						kontext till stycket. Tanken är att det ska handla om minnen och det
+						ska finnas ett berättarjag. När sångaren scrollar nedåt på sidan så
+						kommer volymen på en granulär synt att höjas. Den granulära synten
+						spelar nu ett testljud från en stråkkvartett jag jobbade på i våras.
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						Blandat med text kommer det vara en och annan bild att scrolla
+						förbi. De olika stämmorna kommer att ha olika längd på texten så att
+						altstämman till exempel kommer snabbare till sina noter som då
+						innehåller en queue från sopran 1 som bestämmer tempo och leder
+						resten av kören in i ett sjunget parti.
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
 					</p>
-					<img
+					{/* <img
 						alt="From unsplash"
 						src={
-							"https://i.pinimg.com/474x/89/13/99/891399ca3ea670fab895d9a8a4ee4257.jpg"
+							"https://images.unsplash.com/photo-1570450483095-80261f758e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2957&q=80"
 						}
-					></img>
+					></img> */}
 					<p>Sing the notes below</p>
 					<div className="svg-holder">
 						<SopranoNotes />
 					</div>
-					<VideoPlayer src={roses} />
+					{/* <VideoPlayer src={roses} /> */}
 					When I walk alone, the consequences of every good or bad choice I make
 					fall entirely on me: a responsibility and a freedom. As a woman and a
 					mother, I rarely only have to consider what I want and need without

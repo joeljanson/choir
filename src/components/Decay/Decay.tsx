@@ -84,7 +84,7 @@ function Decay() {
 			onMicAccess={onMicAccess}
 			onToneStarted={onToneStarted}
 			toneStarted={toneStarted}
-			pieceName="DECAY"
+			pieceName="Untitled"
 		/>
 	);
 }
