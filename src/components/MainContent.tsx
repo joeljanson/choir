@@ -24,7 +24,7 @@ function MainContent({
 }: MainContentProps) {
 	return (
 		<div className="main-content-wrapper">
-			<TopBar name="DECAY"></TopBar>
+			{/* <TopBar name="DECAY"></TopBar> */}
 			<div className="upper-content-wrapper">
 				<PagerView
 					buffers={buffers}
@@ -32,11 +32,11 @@ function MainContent({
 					hasMicAccess={hasMicAccess}
 				/>
 			</div>
-			<Pagination
+			{/* <Pagination
 				currentPage={currentPage}
 				setCurrentPage={setCurrentPage}
 				totalCount={totalCount}
-			/>
+			/> */}
 		</div>
 	);
 }
