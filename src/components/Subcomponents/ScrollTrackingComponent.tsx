@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ReactComponent as SopranoNotes } from "../assets/images/notes/dorico.svg";
 import { Player, Volume, gainToDb } from "tone";
-import { adagio, programblad } from "../utils/AudioFiles";
 
-import "../css/ScrollTracking.scss";
-import "../css/ScrollTracking.scss";
-import DroneGrainPlayer from "../utils/DroneGrainPlayer";
+import "../../css/ScrollTracking.scss";
+import "../../css/ScrollTracking.scss";
+import DroneGrainPlayer from "../../utils/DroneGrainPlayer";
 /* import VideoPlayer from "./Video"; */
 
 /* const roses = require("../assets/roses.mp4"); */
@@ -60,7 +59,7 @@ const ScrollTrackingDiv: React.FC = () => {
 			const volume = new Volume(-Infinity).toDestination();
 			myVol.current = volume;
 			const intPlayer = new DroneGrainPlayer({
-				url: programblad,
+				url: "",
 				frequency: 0.1, // Maybe change these into global variables?
 				grainSize: 0.5, // Maybe change these into global variables?
 				overlap: 0.1,

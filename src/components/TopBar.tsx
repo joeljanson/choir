@@ -3,17 +3,18 @@ import "../css/TopBar.scss";
 
 type TopBarProps = {
 	name: string;
+	part: string;
 	// currentPage: number;
 	// setCurrentPage: (newCurrentPage: number) => void;
 	// totalCount: number;
 };
 
-function TopBar({ name }: TopBarProps) {
+function TopBar({ name, part }: TopBarProps) {
 	return (
 		<div className="top-bar-wrapper">
-			<div>Section-dummy</div>
+			<div>*****</div>
 			<div>{name}</div>
-			<div>Voice/Part</div>
+			<div>{part}</div>
 		</div>
 	);
 }

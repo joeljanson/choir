@@ -1,13 +1,14 @@
-import { ToneAudioBuffer } from "tone";
-import AudioRecorderComponent from "./AudioRecorderComponent";
-import CanvasComponent from "./CanvasComponent";
-//import PlayerComponent from "./PlayerComponent";
-import BaseComponent from "./BaseComponent";
-import ScrollTrackingDiv from "./ScrollTrackingComponent";
+import { ToneAudioBuffers } from "tone";
+import AudioRecorderComponent from "./Subcomponents/AudioRecorderComponent";
+import CanvasComponent from "./Subcomponents/CanvasComponent";
+import PlayerComponent from "./Subcomponents/PlayerComponent";
+import BaseComponent from "./Subcomponents/BaseComponent";
+import SimpleText from "./Subcomponents/SimpleText";
+//import ScrollTrackingDiv from "./Subcomponents/ScrollTrackingComponent";
 
 type PagerViewProps = {
 	currentPage: number;
-	buffers: ToneAudioBuffer[];
+	buffers: ToneAudioBuffers;
 	hasMicAccess: boolean;
 };
 
@@ -19,11 +20,12 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 				<div>
 					<BaseComponent
 						components={[
-							// <PlayerComponent key="1" buffer={buffers[0]} />,
+							<SimpleText />,
+							//<PlayerComponent key="1" buffer={buffers.get("0")} />,
 							// <PlayerComponent key="1" buffer={buffers[1]} />,
 							// <CanvasComponent />,
 							//<ScrollSpeed></ScrollSpeed>,
-							<ScrollTrackingDiv></ScrollTrackingDiv>,
+							//<ScrollTrackingDiv></ScrollTrackingDiv>,
 						]}
 						upperComponentHeight="66%"
 					></BaseComponent>

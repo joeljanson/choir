@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import "../css/CanvasComponent.scss";
-import { Ball } from "../utils/Ball";
+import "../../css/CanvasComponent.scss";
+import { Ball } from "../../utils/Ball";
 
 function CanvasComponent() {
 	const canvasRef = useRef<null | any>(null);

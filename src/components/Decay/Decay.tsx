@@ -1,92 +1,81 @@
 //Import external libraries
 import React, { useEffect, useState } from "react";
-import { Buffer, ToneAudioBuffer } from "tone";
+import { ToneAudioBuffers, start } from "tone";
+import IntroComponent from "../Main components/IntroComponent";
+import MainContent from "../Main components/MainContent";
+import "../../css/Decay.scss";
 
 //Components
-import IntroComponent from "../IntroComponent";
-import MainContent from "../MainContent";
+//import IntroComponent from "../Main components/IntroComponent";
+//import MainContent from "../Main components/MainContent";
 
-// Setup audio mixer
-import { Audio } from "../../utils/Audio";
-
-// Load audio files
-import { piano, keyboardClick } from "../../utils/AudioFiles";
-
-export type ComponentBuffer = {
-	bufferUrl: ToneAudioBuffer;
-	playlistBehaviour: "auto" | "none";
-	name: string;
+export type PartComponentProps = {
+	partName: string;
 };
 
-function Decay() {
-	const [buffers, setBuffers] = useState<ToneAudioBuffer[]>([]);
-	const [hasMicrophoneAccess, setHasMicrophoneAccess] = useState(false);
-	const [wantsMicrophoneAccess] = useState(false);
-	const [toneStarted, setToneStarted] = useState(false);
-	const [buffersLoaded, setBuffersLoaded] = useState(false);
-
+function Decay({ partName }: PartComponentProps) {
+	const [loaded, setLoaded] = useState(false);
+	const [started, setStarted] = useState(false);
 	const [currentPage, setCurrentPage] = useState(0);
+	const [buffers, setBuffers] = useState<ToneAudioBuffers | null>(null);
 
-	useEffect(
-		() => {
-			new Audio();
-			loadBuffer(piano);
-			loadBuffer(keyboardClick);
-		},
-		[
-			/* dependency array (läs på)*/
-		]
-	);
+	useEffect(() => {}, [currentPage]);
 
-	const loadBuffer = (bufferUrl: any) => {
-		new Buffer({
-			url: bufferUrl,
-			onload: (loadedBuffer) => {
-				console.log("audio loaded");
-				if (!loadedBuffer) return;
-				setBuffers((buffers) => [loadedBuffer, ...buffers]);
-				setBuffersLoaded(true);
-			},
-		});
-	};
-
-	// useEffect(()=>{
-	// },[currentPage])
-	const onMicAccess = () => {
-		setHasMicrophoneAccess(true);
-	};
-
-	const onToneStarted = () => {
-		setToneStarted(true);
+	const onLoaded = (loadedBuffers: ToneAudioBuffers) => {
+		setBuffers(loadedBuffers);
+		setLoaded(true);
+		console.log("Loaded buffers are: ", loadedBuffers);
+		//const player = new Player(loadedBuffers.get("0")).toDestination().start();
+		/* const playerTwo = new Player(loadedBuffers.get("1"))
+			.toDestination()
+			.start(); */
 	};
 
 	const onSetCurrentPage = (page: number) => {
 		setCurrentPage(page);
 	};
 
-	if (
-		(wantsMicrophoneAccess && hasMicrophoneAccess && buffersLoaded) ||
-		(!wantsMicrophoneAccess && toneStarted && buffersLoaded)
-	)
+	const handleClick = async () => {
+		console.log("Click!");
+		await start();
+		setStarted(true);
+	};
+
+	if (loaded) {
+		if (started) {
+			return (
+				<MainContent
+					currentPage={currentPage}
+					buffers={buffers!}
+					setCurrentPage={onSetCurrentPage}
+					totalCount={5}
+					hasMicAccess={false}
+					part={partName}
+				></MainContent>
+			);
+		} else {
+			return (
+				<div className="decay-content-wrapper">
+					<div className="content">
+						<h1>All set and ready to go</h1>
+						<p>
+							Once you are ready, wait for the conductor to sign and then press
+							the button below.
+						</p>
+						<button onClick={() => handleClick()}>Start piece</button>
+					</div>
+				</div>
+			);
+		}
+	} else {
 		return (
-			<MainContent
-				currentPage={currentPage}
-				setCurrentPage={onSetCurrentPage}
-				buffers={buffers}
-				totalCount={5}
-				hasMicAccess={hasMicrophoneAccess}
-			></MainContent>
+			<IntroComponent
+				onLoaded={onLoaded}
+				pieceName={"Loading " + partName + " part"}
+				buffersToLoad={["Adagio.wav"]}
+			></IntroComponent>
 		);
-	return (
-		<IntroComponent
-			wantsMicAccess={wantsMicrophoneAccess}
-			hasMicAccess={hasMicrophoneAccess}
-			onMicAccess={onMicAccess}
-			onToneStarted={onToneStarted}
-			toneStarted={toneStarted}
-			pieceName="Programblad"
-		/>
-	);
+	}
 }
 
 export default Decay;

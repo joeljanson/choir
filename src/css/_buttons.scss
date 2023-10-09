@@ -1,0 +1,13 @@
+@use "colors";
+button {
+	font-family: inherit;
+	background-color: colors.$white;
+	color: colors.$grey;
+	border-radius: 2px;
+	border: none;
+	padding: 20px;
+	width: 200px;
+	user-select: none;
+	cursor: pointer;
+	margin-top: 20px;
+}

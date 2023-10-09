@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Player, Channel, ToneAudioBuffer, gainToDb, now } from "tone";
-import { outputs } from "../utils/constants";
-import "../css/PlayerComponent.scss";
+import { outputs } from "../../utils/constants";
+import "../../css/PlayerComponent.scss";
 
 type PlayerComponentProps = {
 	buffer: ToneAudioBuffer;
@@ -71,7 +71,8 @@ function PlayerComponent({ buffer }: PlayerComponentProps) {
 				thisPlayer.dispose();
 			},
 			onload: () => {},
-		}).connect(channel.current);
+			//}).connect(channel.current);
+		}).toDestination();
 		player.start();
 		console.log("Is there a slight latency??");
 		console.log("should sound, click count is: ", clickCount);

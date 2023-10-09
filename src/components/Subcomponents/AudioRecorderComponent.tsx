@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Player, Channel, Buffer, Recorder } from "tone";
-import { inputs, outputs } from "../utils/constants";
-import { normalize } from "../utils/Audio";
+import { inputs, outputs } from "../../utils/constants";
+import { normalize } from "../../utils/Audio";
 
 //Import scss
-import "../css/AudioRecorder.scss";
+import "../../css/AudioRecorder.scss";
 
 export type AudioRecorderComponentProps = {
 	/**

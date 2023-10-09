@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import "../css/BaseComponent.scss";
+import "../../css/BaseComponent.scss";
 
 interface BaseComponentProps {
 	components?: ReactNode | ReactNode[]; // Accept a single component or an array of components

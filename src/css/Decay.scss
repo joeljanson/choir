@@ -1,0 +1,25 @@
+@use "colors";
+@use "sizes";
+@use "buttons";
+.decay-content-wrapper {
+	background-color: colors.$grey;
+	color: colors.$white;
+	text-align: center;
+	display: flex;
+	min-height: 100%;
+	height: 100%;
+	flex-direction: column;
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+		padding: 30px;
+	}
+	p,
+	h1 {
+		margin-bottom: 40px;
+	}
+}
