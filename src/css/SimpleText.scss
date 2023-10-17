@@ -14,18 +14,14 @@
 		width: 100%;
 		height: 100%;
 		overflow-y: scroll;
-		padding-right: 20px;
-		padding-left: 40px;
-		box-sizing: content-box;
-		margin-left: -32.5px;
 	}
 
 	#parallax-simpletext {
 		display: flex;
-		width: calc(100% - 5px);
+		width: 100%;
 		flex-direction: column;
 		justify-content: center;
-		padding: 0 20px 0 10px;
+		padding: 0 10px 0 10px;
 		text-align: justify;
 		text-justify: inter-character;
 		transition: top 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -46,6 +42,11 @@
 		font-weight: bold;
 		color: orangered;
 		font-size: 24px;
+		&.no-span {
+			font-size: unset;
+			color: white;
+			font-weight: 100;
+		}
 	}
 }
 

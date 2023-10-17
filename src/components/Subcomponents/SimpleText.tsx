@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ReactComponent as SopranoNotes } from "../assets/images/notes/dorico.svg";
-import { Player, Volume, gainToDb } from "tone";
+import { Player, Volume, gainToDb, ToneAudioBuffers } from "tone";
+
+import { gsap } from "gsap";
+
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../../css/SimpleText.scss";
 
@@ -9,7 +13,11 @@ import "../../css/SimpleText.scss";
 /* const roses = require("../assets/roses.mp4"); */
 //const soprano = require("../assets/images/notes/soprano_test.svg");
 
-const SimpleText: React.FC = () => {
+type SimpleTextProps = {
+	buffers: ToneAudioBuffers;
+};
+
+function SimpleText({ buffers }: SimpleTextProps) {
 	const divRef = useRef<HTMLDivElement>(null);
 	const myVol = useRef<Volume | null>(null);
 	const lastFrameVelocity = useRef<number>(0); // To store the velocity of the last frame
@@ -32,18 +40,48 @@ const SimpleText: React.FC = () => {
 					singlePlayer.current.start();
 				} */
 			}
-			const scrollPosition = newScrollPosition;
-			const parallaxElement = document.getElementById("parallax");
-			if (parallaxElement) {
-				console.log(-scrollPosition);
-				//parallaxElement.style.top = `${100 - scrollPosition * 0.5}px`;
-				parallaxElement.style.top = `${-scrollPosition * scrollRatio}px`;
-			}
 		}
 	};
 
 	useEffect(() => {
+		gsap.registerPlugin(ScrollTrigger);
+
+		gsap.to("#first", {
+			scrollTrigger: {
+				trigger: "#first",
+				scroller: "#scroller",
+				start: "top 50%",
+				end: "bottom bottom",
+				scrub: true,
+				markers: true,
+				onEnter: ({ progress, direction, isActive }) => {
+					const buffer = buffers.get("clairdelune");
+					const player = new Player({
+						url: buffer,
+						autostart: true,
+					}).toDestination();
+					player.start();
+					console.log(player);
+					console.log(progress, direction, isActive);
+				},
+			},
+		});
+
+		gsap.to("#claire", {
+			scrollTrigger: {
+				trigger: "#claire",
+				scroller: "#scroller",
+				start: "top 50%",
+				end: "bottom bottom",
+				scrub: true,
+				markers: true,
+				onEnter: ({ progress, direction, isActive }) =>
+					console.log(progress, direction, isActive),
+			},
+		});
+
 		const currentDivNode = divRef.current;
+		console.log("Simpletext buffers: ", buffers);
 
 		if (currentDivNode) {
 			currentDivNode.addEventListener("scroll", handleScroll);
@@ -57,7 +95,7 @@ const SimpleText: React.FC = () => {
 
 	return (
 		<div className="simple-text">
-			<div className="scroll-content" ref={divRef}>
+			<div id="scroller" className="scroll-content" ref={divRef}>
 				<div
 					style={{
 						position: "absolute",
@@ -92,7 +130,7 @@ const SimpleText: React.FC = () => {
 						but make sure to articulate it and say it loud so that the audience
 						can hear your voice over what's going on in the speakers.
 					</p>
-					<p>
+					<p id="first">
 						In the speakers, initially the audio coming from the speakers will
 						be recordings representing the sounds that are somehow connected to
 						the text. For example, if you have gotten the text that is about Las
@@ -127,8 +165,11 @@ const SimpleText: React.FC = () => {
 					<p>
 						We lived, of course, inside one of the casinos. Paris Las Vegas
 						Hotel it was called. From the window of one of our rooms, we could
-						see the Bellagio fountain. It made me think of Claire de Lune, and
-						plotting, scheming. Oceans eleven. Childhood and cluelessness.
+						see the Bellagio fountain. It made me think of{" "}
+						<span className="no-span" id="claire">
+							Claire de Lune
+						</span>
+						, and plotting, scheming. Oceans eleven. Childhood and cluelessness.
 					</p>
 					{/* <button
 						onClick={() => {
@@ -137,127 +178,10 @@ const SimpleText: React.FC = () => {
 					>
 						Click me!
 					</button> */}
-					<h2>The Building Blocks of Reality</h2>
-					<p>
-						Numbers are the building blocks of our universe. Think about it:
-						from the speed of light (approximately 3 × 1 0 8 3×10 8 meters per
-						second) to the golden ratio ( ϕ=1.618033988749895...), numbers are
-						the language through which the cosmos communicates. They're the DNA
-						of the universe, encoding the laws that govern everything from the
-						tiniest subatomic particles to the most massive galaxies.
-						<br />
-						<br />
-						<br />
-						<img src="https://images.unsplash.com/photo-1575096865054-07396378e082?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z29sZGVuJTIwcmF0aW98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>The Mystical and the Mathematical</h2>
-					<p>
-						Numbers have fascinated humans for millennia, not just as tools for
-						counting or measuring, but also as symbols of deeper, mystical
-						truths. The ancient Pythagoreans revered numbers, believing that
-						they held the secrets to the universe. The number three, for
-						example, symbolized completeness—beginning, middle, and end. The
-						number seven was considered sacred and appeared frequently in
-						religious texts and rituals.
-						<br />
-						<br />
-						<br />
-						<img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWF0aHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>The Art of Numbers</h2>
-					<p>
-						Numbers are not just cold, lifeless entities; they have an aesthetic
-						quality that has inspired artists and musicians. Take the Fibonacci
-						sequence, a series of numbers where each number is the sum of the
-						two preceding ones: 0 , 1 , 1 , 2 , 3 , 5 , 8 , 13 , 21 , …
-						0,1,1,2,3,5,8,13,21,…. This sequence is not just a mathematical
-						curiosity; it appears in nature, in the spirals of sunflowers and
-						the branching of trees. Musicians like Johann Sebastian Bach have
-						even used mathematical structures to compose timeless pieces.
-						<br />
-						<br />
-						<br />
-						<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg" />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>The Uncanny and the Irrational</h2>
-					<p>
-						But numbers also have their quirks and mysteries. Consider
-						irrational numbers like π and e, numbers that cannot be expressed as
-						simple fractions and whose decimal representations go on forever
-						without repeating. They challenge our intuitive understanding of
-						numbers and yet are fundamental to equations that describe natural
-						phenomena.
-						<br />
-						<br />
-						<br />
-						<img src="https://comcath.se/wp-content/uploads/2016/03/pi4.gif" />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>Numbers in the Digital Age</h2>
-					<p>
-						In our modern world, numbers have found a new playground: the realm
-						of computers and algorithms. Here, numbers are more than just
-						quantities; they are data points, pixels, and lines of code that
-						create virtual worlds, simulate complex systems, and even compose
-						music. As a composer, you might find it intriguing how algorithmic
-						composition uses mathematical models to generate musical pieces,
-						blending the worlds of numbers and art in a harmonious symphony.
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>The Future: Numbers Unveiling the Unknown</h2>
-					<p>
-						As we venture into the unknown territories of quantum mechanics and
-						explore the far reaches of the universe, numbers will continue to be
-						our guiding light. They will help us decode the mysteries that are
-						yet to be unraveled, acting as the keys to doors we didn't even know
-						existed.
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-					</p>
-					<h2>Fin</h2>
-					<p>
-						When you've gotten to here, sing section A in the score and then
-						once you've finished, press the arrow below to go to the next
-						section.
-						<br />
-						<br />
-					</p>
-					<br />
-					{/* <img
-						alt="From unsplash"
-						src={
-							"https://images.unsplash.com/photo-1570450483095-80261f758e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2957&q=80"
-						}
-					></img> */}
-					{/* <p>Sing the notes below</p>
-					<div className="svg-holder">
-						<SopranoNotes />
-					</div> */}
-					{/* <VideoPlayer src={roses} /> */}
 				</div>
 			</div>
 		</div>
 	);
-};
+}
 
 export default SimpleText;

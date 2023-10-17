@@ -20,7 +20,7 @@ function PagerView({ currentPage, buffers, hasMicAccess }: PagerViewProps) {
 				<div>
 					<BaseComponent
 						components={[
-							<SimpleText />,
+							<SimpleText buffers={buffers} />,
 							//<PlayerComponent key="1" buffer={buffers.get("0")} />,
 							// <PlayerComponent key="1" buffer={buffers[1]} />,
 							// <CanvasComponent />,

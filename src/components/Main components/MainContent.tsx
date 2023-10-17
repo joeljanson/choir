@@ -35,7 +35,7 @@ function MainContent({
 
 	return (
 		<div className="main-content-wrapper">
-			<TopBar name="DECAY" part={part}></TopBar>
+			<TopBar name="DETACH" part={part}></TopBar>
 			<div className="upper-content-wrapper">
 				<PagerView
 					currentPage={currentPage}

@@ -1,9 +1,10 @@
 //Import external libraries
 import React, { useEffect, useState } from "react";
-import { ToneAudioBuffers, start } from "tone";
+import { Player, ToneAudioBuffers, Transport, Volume, start } from "tone";
 import IntroComponent from "../Main components/IntroComponent";
 import MainContent from "../Main components/MainContent";
 import "../../css/Decay.scss";
+import { Console } from "console";
 
 //Components
 //import IntroComponent from "../Main components/IntroComponent";
@@ -36,9 +37,33 @@ function Decay({ partName }: PartComponentProps) {
 	};
 
 	const handleClick = async () => {
+		console.log(
+			"Here -> Start the transport and make a volume fade up to 0db during 1 minute 20 seconds. The audio file should be two minutes long.",
+			"The first minute should be faint noises - connected to the environment that is being read about.",
+			"The next 40 seconds should contain the full on environment, fading in over 20s (as a 30s loop  to save mb?)",
+			"So after 2 minutes approximately, the 'aaaaaah' recording appears to give a note.",
+			"During the next 30 seconds, the conductor starts conducting and altos join in the 'aaaaaah'",
+			"At 2 minutes 45 seconds, everyone starts. and the audio from the speakers disappear during 15s while the choir is singing tutti, except for the aaaahs"
+		);
 		console.log("Click!");
 		await start();
 		setStarted(true);
+		const volume = new Volume(-Infinity).toDestination();
+		const player = new Player(buffers?.get("ahs")).connect(volume);
+		const atmosPlayer = new Player(buffers?.get("atmos")).connect(volume);
+		player.loop = true;
+		player.fadeIn = 5;
+		atmosPlayer.loop = true;
+		volume.volume.linearRampTo(0, 30, "+2");
+		player.start("+10");
+		atmosPlayer.start();
+		Transport.scheduleOnce((time) => {
+			console.log("This many seconds has passed: ", time);
+		}, 2);
+		Transport.scheduleOnce((time) => {
+			console.log("This many seconds has passed: ", time);
+		}, 12);
+		Transport.start();
 	};
 
 	if (loaded) {
@@ -72,7 +97,7 @@ function Decay({ partName }: PartComponentProps) {
 			<IntroComponent
 				onLoaded={onLoaded}
 				pieceName={"Loading " + partName + " part"}
-				buffersToLoad={["Adagio.wav"]}
+				partName={partName}
 			></IntroComponent>
 		);
 	}

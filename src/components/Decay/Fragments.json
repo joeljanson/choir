@@ -1,0 +1,80 @@
+{
+	"soprano": {
+		"sanfransisco": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "casino-test.mp3"
+				},
+				{
+					"trigger": "atmos",
+					"audioPath": "sanfransisco/atmos.mp3"
+				},{
+					"trigger": "ahs",
+					"audioPath": "common/ah.mp3"
+				}
+			]
+		}
+	},
+	"alto": {
+		"vegas": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "casino-test.mp3"
+				}
+			]
+		},
+		"newyork": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "clay.mp3"
+				}
+			]
+		}
+	},
+	"tenor": {
+		"vegas": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "casino-test.mp3"
+				}
+			]
+		},
+		"newyork": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "clay.mp3"
+				}
+			]
+		}
+	},
+	"bass": {
+		"vegas": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "casino-test.mp3"
+				}
+			]
+		},
+		"newyork": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "clairdelune",
+					"audioPath": "clay.mp3"
+				}
+			]
+		}
+	}
+}
