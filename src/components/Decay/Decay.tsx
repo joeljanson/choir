@@ -48,22 +48,49 @@ function Decay({ partName }: PartComponentProps) {
 		console.log("Click!");
 		await start();
 		setStarted(true);
+		// Setup volume control
 		const volume = new Volume(-Infinity).toDestination();
-		const player = new Player(buffers?.get("ahs")).connect(volume);
+		const ahVolume = new Volume(-Infinity).toDestination();
+
+		//Setup the players
+		const ahplayer = new Player(buffers?.get("ahs")).connect(ahVolume);
+		ahplayer.loop = true;
+		ahplayer.fadeIn = 5;
 		const atmosPlayer = new Player(buffers?.get("atmos")).connect(volume);
-		player.loop = true;
-		player.fadeIn = 5;
 		atmosPlayer.loop = true;
-		volume.volume.linearRampTo(0, 30, "+2");
-		player.start("+10");
-		atmosPlayer.start();
-		Transport.scheduleOnce((time) => {
-			console.log("This many seconds has passed: ", time);
-		}, 2);
-		Transport.scheduleOnce((time) => {
-			console.log("This many seconds has passed: ", time);
-		}, 12);
-		Transport.start();
+		const atmosExtraPlayer = new Player(buffers?.get("atmos-extra")).connect(
+			volume
+		);
+		atmosExtraPlayer.loop = true;
+
+		//setup the timing queues of the players
+		const atmosQueue = 10;
+		const atmosExtraQueue = atmosQueue + 10;
+		const ahPlayerQueue = atmosQueue + (10 + Math.random() * 20);
+
+		const stopTime = 120;
+		if (stopTime > ahPlayerQueue) {
+			console.warn("Warning! The ahplayer queue is later than the stop time!");
+		}
+
+		//Queue the players
+		ahplayer.start("+" + ahPlayerQueue);
+		atmosPlayer.start("+" + atmosQueue);
+		atmosExtraPlayer.start("+" + atmosExtraQueue);
+
+		//Queue the volume fades
+		ahVolume.volume.linearRampTo(
+			0,
+			30 + Math.random() * 15,
+			"+" + ahPlayerQueue
+		);
+		volume.volume.linearRampTo(0, 10, "+" + atmosQueue);
+
+		//Stop the players after exactly 120 seconds (now)
+		//should actually fade out the atmos players!
+		ahplayer.stop("+" + stopTime);
+		atmosPlayer.stop("+" + stopTime);
+		atmosExtraPlayer.stop("+" + stopTime);
 	};
 
 	if (loaded) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ReactComponent as SopranoNotes } from "../assets/images/notes/dorico.svg";
-import { Player, Volume, gainToDb, ToneAudioBuffers } from "tone";
+import { Player, Volume, gainToDb, ToneAudioBuffers, BufferSource } from "tone";
 
 import { gsap } from "gsap";
 
@@ -17,69 +17,98 @@ type SimpleTextProps = {
 	buffers: ToneAudioBuffers;
 };
 
+type RandomPercentageEntry = {
+	percentage: number;
+	bufferUrl: string;
+	playEntire: boolean;
+};
+
 function SimpleText({ buffers }: SimpleTextProps) {
 	const divRef = useRef<HTMLDivElement>(null);
-	const myVol = useRef<Volume | null>(null);
-	const lastFrameVelocity = useRef<number>(0); // To store the velocity of the last frame
-	const lastFramePosition = useRef<number>(0); // To store the position of the last frame
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
-	const [scrollVelocity, setScrollVelocity] = useState<number>(0);
-	const [scrollRatio, setScrollRatio] = useState<number>(0.005);
+	const [randomPercentages, setRandomPercentages] = useState<
+		RandomPercentageEntry[]
+	>([]);
+	const [triggeredPercentages, setTriggeredPercentages] = useState<
+		RandomPercentageEntry[]
+	>([]);
 
-	// Function to handle scroll events
 	const handleScroll = () => {
-		console.log("scrolling");
+		//console.log("scrolling");
 		if (divRef.current) {
-			// Just update the current scroll position
+			// Update the current scroll position
 			const newScrollPosition = divRef.current.scrollTop;
-			setScrollPosition(newScrollPosition);
 
-			if (newScrollPosition > 1500) {
-				console.log("Scroll bigger than 1500!");
-				/* if (singlePlayer.current && singlePlayer.current.state !== "started") {
-					singlePlayer.current.start();
-				} */
-			}
+			// Calculate the scrollable height
+			const scrollableHeight =
+				divRef.current.scrollHeight - divRef.current.clientHeight;
+
+			// Calculate the scroll percentage
+			const scrollPercentage = (newScrollPosition / scrollableHeight) * 100;
+
+			//console.log("Scrollpercentage is: ", scrollPercentage);
+			//console.log("We passed this percentage: ", randomPercentages);
+			randomPercentages.forEach((number) => {
+				const { percentage, bufferUrl, playEntire } = number;
+				if (
+					scrollPercentage >= percentage &&
+					!triggeredPercentages.includes(number)
+				) {
+					console.log(`We passed this percentage: ${number}`);
+					console.log(`triggeredPercentagese: ${triggeredPercentages}`);
+
+					const atmosBuffer = buffers.get(bufferUrl); // Assuming 'atmos' is the key for your buffer
+					if (atmosBuffer) {
+						console.log("Buffer atmos exists!");
+						const bufferDuration = atmosBuffer.duration;
+						const randomStartTime = Math.random() * (bufferDuration - 4); // Subtract 4 to ensure 4-second playtime
+
+						const source = new BufferSource({
+							url: atmosBuffer,
+							// any additional properties you want to set
+						}).toDestination();
+						console.log("Random start time is:", randomStartTime);
+						if (playEntire) {
+							source.start("+0.1"); // Start immediately, at the random start time, for 4 seconds
+						} else {
+							source.start("+0.1", randomStartTime, 4); // Start immediately, at the random start time, for 4 seconds
+						}
+					}
+					// Add the triggered percentage to the state
+					setTriggeredPercentages([...triggeredPercentages, number]);
+				}
+			});
+
+			setScrollPosition(scrollPercentage);
 		}
 	};
 
+	// Function to generate random number in a given range
+	const getRandomInRange = (min: number, max: number): number => {
+		return Math.random() * (max - min) + min;
+	};
+
 	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
+		// Define your ranges
+		// Define your ranges with additional 'bufferUrl' field
+		const ranges = [
+			{ min: 2, max: 5, bufferUrl: "atmos" },
+			{ min: 10, max: 20, bufferUrl: "stinger1" },
+			// Add more ranges as needed
+		];
 
-		gsap.to("#first", {
-			scrollTrigger: {
-				trigger: "#first",
-				scroller: "#scroller",
-				start: "top 50%",
-				end: "bottom bottom",
-				scrub: true,
-				markers: true,
-				onEnter: ({ progress, direction, isActive }) => {
-					const buffer = buffers.get("clairdelune");
-					const player = new Player({
-						url: buffer,
-						autostart: true,
-					}).toDestination();
-					player.start();
-					console.log(player);
-					console.log(progress, direction, isActive);
-				},
-			},
-		});
+		// Generate random percentages and buffer names for each range
+		const randomPercentages = ranges.map((range) => ({
+			percentage: getRandomInRange(range.min, range.max),
+			bufferUrl: range.bufferUrl,
+			playEntire: range.bufferUrl.includes("stinger"),
+		}));
 
-		gsap.to("#claire", {
-			scrollTrigger: {
-				trigger: "#claire",
-				scroller: "#scroller",
-				start: "top 50%",
-				end: "bottom bottom",
-				scrub: true,
-				markers: true,
-				onEnter: ({ progress, direction, isActive }) =>
-					console.log(progress, direction, isActive),
-			},
-		});
+		// Update the state
+		setRandomPercentages(randomPercentages);
+	}, []);
 
+	useEffect(() => {
 		const currentDivNode = divRef.current;
 		console.log("Simpletext buffers: ", buffers);
 
@@ -91,7 +120,7 @@ function SimpleText({ buffers }: SimpleTextProps) {
 				currentDivNode.removeEventListener("scroll", handleScroll);
 			};
 		}
-	}, []);
+	}, [randomPercentages, triggeredPercentages]);
 
 	return (
 		<div className="simple-text">
@@ -106,7 +135,7 @@ function SimpleText({ buffers }: SimpleTextProps) {
 						width: "100%",
 					}}
 				>
-					Scroll Position: {scrollPosition}px
+					Scroll Position: {scrollPosition.toFixed()}%
 					{/* Volume: {myVol.current?.volume.value.toFixed(2)} */}
 				</div>
 				<div id="parallax-simpletext">
@@ -152,6 +181,48 @@ function SimpleText({ buffers }: SimpleTextProps) {
 					<br />
 					<br />
 					<h1>Chapter one</h1>
+					<p>
+						Not far from Las Vegas, the five of us in the car. I sat in the
+						passenger seat and <span>in the corner of my eye</span> I saw a bus
+						right next to our car. You didn’t notice it and put the blinkers on
+						to change lanes. Such a thin line. We drove for a bit more before
+						switching and I took over the driving. You apologized again for not
+						seeing the bus and for once thanked me for being a backseat driver.
+						We had about an hour left before turning onto{" "}
+						<span>the strip.</span>
+					</p>
+					<p>
+						We lived, of course, inside one of the casinos. Paris Las Vegas
+						Hotel it was called. From the window of one of our rooms, we could
+						see the Bellagio fountain. It made me think of{" "}
+						<span className="no-span" id="claire">
+							Claire de Lune
+						</span>
+						, and plotting, scheming. Oceans eleven. Childhood and cluelessness.
+					</p>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<h1>Chapter two</h1>
 					<p>
 						Not far from Las Vegas, the five of us in the car. I sat in the
 						passenger seat and <span>in the corner of my eye</span> I saw a bus

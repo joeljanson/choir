@@ -4,13 +4,39 @@
 			"narrative": "<h1>blablabl</h1><p>Hej</p>",
 			"audio": [
 				{
-					"trigger": "clairdelune",
-					"audioPath": "casino-test.mp3"
+					"trigger": "atmos",
+					"audioPath": "sanfransisco/atmos.mp3"
+				},
+				{
+					"trigger": "atmos-extra",
+					"audioPath": "sanfransisco/atmos-extra.mp3"
+				},
+				{
+					"trigger": "ahs",
+					"audioPath": "common/ah.mp3"
+				},
+				{
+					"trigger": "stinger1",
+					"audioPath": "sanfransisco/stinger-1.mp3"
+				}
+			]
+		},
+		"vegas": {
+			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"audio": [
+				{
+					"trigger": "stinger1",
+					"audioPath": "vegas/stinger-1.mp3"
 				},
 				{
 					"trigger": "atmos",
-					"audioPath": "sanfransisco/atmos.mp3"
-				},{
+					"audioPath": "vegas/atmos.mp3"
+				},
+				{
+					"trigger": "atmos-extra",
+					"audioPath": "vegas/atmos-extra.mp3"
+				},
+				{
 					"trigger": "ahs",
 					"audioPath": "common/ah.mp3"
 				}
