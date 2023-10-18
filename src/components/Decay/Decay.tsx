@@ -91,6 +91,8 @@ function Decay({ partName }: PartComponentProps) {
 		ahplayer.stop("+" + stopTime);
 		atmosPlayer.stop("+" + stopTime);
 		atmosExtraPlayer.stop("+" + stopTime);
+		ahVolume.volume.linearRampTo(-Infinity, 15, "+" + (stopTime - 15));
+		volume.volume.linearRampTo(-Infinity, 15, "+" + (stopTime - 15));
 	};
 
 	if (loaded) {
