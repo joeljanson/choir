@@ -15,6 +15,7 @@ import "../../css/SimpleText.scss";
 
 type SimpleTextProps = {
 	buffers: ToneAudioBuffers;
+	narrativeForPartOne: string;
 };
 
 type RandomPercentageEntry = {
@@ -23,7 +24,7 @@ type RandomPercentageEntry = {
 	playEntire: boolean;
 };
 
-function SimpleText({ buffers }: SimpleTextProps) {
+function SimpleText({ buffers, narrativeForPartOne }: SimpleTextProps) {
 	const divRef = useRef<HTMLDivElement>(null);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
 	const [randomPercentages, setRandomPercentages] = useState<
@@ -67,10 +68,10 @@ function SimpleText({ buffers }: SimpleTextProps) {
 							url: atmosBuffer,
 							// any additional properties you want to set
 						}).toDestination();
-						console.log("Random start time is:", randomStartTime);
 						if (playEntire) {
 							source.start("+0.1"); // Start immediately, at the random start time, for 4 seconds
 						} else {
+							console.log("Random start time is:", randomStartTime);
 							source.start("+0.1", randomStartTime, 4); // Start immediately, at the random start time, for 4 seconds
 						}
 					}
@@ -139,10 +140,6 @@ function SimpleText({ buffers }: SimpleTextProps) {
 					{/* Volume: {myVol.current?.volume.value.toFixed(2)} */}
 				</div>
 				<div id="parallax-simpletext">
-					<br />
-					<br />
-					<br />
-					<br />
 					<h1>Introduction</h1>
 					<p>
 						This piece is about a trip. A long drive from the east coast of the
@@ -177,6 +174,11 @@ function SimpleText({ buffers }: SimpleTextProps) {
 					</p>
 					<br />
 					<br />
+					<br />
+					<br />
+					<br />
+					<div dangerouslySetInnerHTML={{ __html: narrativeForPartOne }} />
+					{/* <br />
 					<br />
 					<br />
 					<br />
@@ -241,7 +243,7 @@ function SimpleText({ buffers }: SimpleTextProps) {
 							Claire de Lune
 						</span>
 						, and plotting, scheming. Oceans eleven. Childhood and cluelessness.
-					</p>
+					</p> */}
 					{/* <button
 						onClick={() => {
 							console.log("Hello!");

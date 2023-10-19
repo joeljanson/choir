@@ -19,11 +19,16 @@ function Decay({ partName }: PartComponentProps) {
 	const [started, setStarted] = useState(false);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [buffers, setBuffers] = useState<ToneAudioBuffers | null>(null);
+	const [narrativeForPartOne, setNarrativeForPartOne] = useState<string>("");
 
 	useEffect(() => {}, [currentPage]);
 
-	const onLoaded = (loadedBuffers: ToneAudioBuffers) => {
+	const onLoaded = (
+		loadedBuffers: ToneAudioBuffers,
+		narrativeForPartOne: string
+	) => {
 		setBuffers(loadedBuffers);
+		setNarrativeForPartOne(narrativeForPartOne);
 		setLoaded(true);
 		console.log("Loaded buffers are: ", loadedBuffers);
 		//const player = new Player(loadedBuffers.get("0")).toDestination().start();
@@ -50,6 +55,7 @@ function Decay({ partName }: PartComponentProps) {
 		setStarted(true);
 		// Setup volume control
 		const volume = new Volume(-Infinity).toDestination();
+		const atmosExtraVolume = new Volume(-Infinity).toDestination();
 		const ahVolume = new Volume(-Infinity).toDestination();
 
 		//Setup the players
@@ -59,12 +65,12 @@ function Decay({ partName }: PartComponentProps) {
 		const atmosPlayer = new Player(buffers?.get("atmos")).connect(volume);
 		atmosPlayer.loop = true;
 		const atmosExtraPlayer = new Player(buffers?.get("atmos-extra")).connect(
-			volume
+			atmosExtraVolume
 		);
 		atmosExtraPlayer.loop = true;
 
 		//setup the timing queues of the players
-		const atmosQueue = 10;
+		const atmosQueue = 45;
 		const atmosExtraQueue = atmosQueue + 10;
 		const ahPlayerQueue = atmosQueue + (10 + Math.random() * 20);
 
@@ -84,7 +90,12 @@ function Decay({ partName }: PartComponentProps) {
 			30 + Math.random() * 15,
 			"+" + ahPlayerQueue
 		);
-		volume.volume.linearRampTo(0, 10, "+" + atmosQueue);
+		volume.volume.linearRampTo(0, 10 + Math.random() * 15, "+" + atmosQueue);
+		atmosExtraVolume.volume.linearRampTo(
+			0,
+			10 + Math.random() * 15,
+			"+" + atmosExtraQueue
+		);
 
 		//Stop the players after exactly 120 seconds (now)
 		//should actually fade out the atmos players!
@@ -101,6 +112,7 @@ function Decay({ partName }: PartComponentProps) {
 				<MainContent
 					currentPage={currentPage}
 					buffers={buffers!}
+					narrativeForPartOne={narrativeForPartOne}
 					setCurrentPage={onSetCurrentPage}
 					totalCount={5}
 					hasMicAccess={false}

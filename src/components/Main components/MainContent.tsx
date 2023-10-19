@@ -12,6 +12,7 @@ import { useState } from "react";
 type MainContentProps = {
 	currentPage: number;
 	buffers: ToneAudioBuffers;
+	narrativeForPartOne: string;
 	setCurrentPage: (page: number) => void;
 	totalCount: number;
 	hasMicAccess: boolean;
@@ -21,12 +22,12 @@ type MainContentProps = {
 function MainContent({
 	currentPage,
 	buffers,
+	narrativeForPartOne,
 	setCurrentPage,
 	totalCount,
 	hasMicAccess,
 	part,
 }: MainContentProps) {
-	const [internalCurrentPage, setInternalCurrentPage] = useState(0);
 	const onSetCurrentPage = (page: number) => {
 		console.log("Setting the current page!");
 		setCurrentPage(page);
@@ -41,6 +42,7 @@ function MainContent({
 					currentPage={currentPage}
 					hasMicAccess={hasMicAccess}
 					buffers={buffers}
+					narrativeForPartOne={narrativeForPartOne}
 				/>
 			</div>
 			<Pagination

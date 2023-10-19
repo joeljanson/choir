@@ -1,7 +1,7 @@
 {
 	"soprano": {
 		"sanfransisco": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"narrative": "<h1>Soprano</h1><p>San fransisco</p>",
 			"audio": [
 				{
 					"trigger": "atmos",
@@ -22,7 +22,7 @@
 			]
 		},
 		"vegas": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"narrative": "<h1>Soprano</h1><p>Vegas</p>",
 			"audio": [
 				{
 					"trigger": "stinger1",
@@ -41,11 +41,53 @@
 					"audioPath": "common/ah.mp3"
 				}
 			]
+		},
+		"newyork": {
+			"narrative": "<h1>Soprano</h1><p>New York</p>",
+			"audio": [
+				{
+					"trigger": "stinger1",
+					"audioPath": "newyork/stinger-1.mp3"
+				},
+				{
+					"trigger": "atmos",
+					"audioPath": "newyork/atmos.mp3"
+				},
+				{
+					"trigger": "atmos-extra",
+					"audioPath": "newyork/atmos-extra.mp3"
+				},
+				{
+					"trigger": "ahs",
+					"audioPath": "common/ah.mp3"
+				}
+			]
+		},
+		"niagara": {
+			"narrative": "<h1>Soprano</h1><p>Niagara</p>",
+			"audio": [
+				{
+					"trigger": "stinger1",
+					"audioPath": "niagara/stinger-1.mp3"
+				},
+				{
+					"trigger": "atmos",
+					"audioPath": "niagara/atmos.mp3"
+				},
+				{
+					"trigger": "atmos-extra",
+					"audioPath": "niagara/atmos-extra.mp3"
+				},
+				{
+					"trigger": "ahs",
+					"audioPath": "common/ah.mp3"
+				}
+			]
 		}
 	},
 	"alto": {
 		"vegas": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"narrative": "<h1>Alto</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -54,7 +96,7 @@
 			]
 		},
 		"newyork": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
+			"narrative": "<h1>Alto</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
