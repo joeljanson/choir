@@ -6,13 +6,12 @@ import "../../css/MainContent.scss";
 import PagerView from "../PagerViewComponent";
 import { ToneAudioBuffers } from "tone";
 import TopBar from "../TopBar";
-import SimpleText from "../Subcomponents/SimpleText";
-import { useState } from "react";
 
 type MainContentProps = {
 	currentPage: number;
 	buffers: ToneAudioBuffers;
-	narrativeForPartOne: string;
+	partName: string;
+	place: string;
 	setCurrentPage: (page: number) => void;
 	totalCount: number;
 	hasMicAccess: boolean;
@@ -22,7 +21,8 @@ type MainContentProps = {
 function MainContent({
 	currentPage,
 	buffers,
-	narrativeForPartOne,
+	partName,
+	place,
 	setCurrentPage,
 	totalCount,
 	hasMicAccess,
@@ -42,7 +42,8 @@ function MainContent({
 					currentPage={currentPage}
 					hasMicAccess={hasMicAccess}
 					buffers={buffers}
-					narrativeForPartOne={narrativeForPartOne}
+					partName={partName}
+					place={place}
 				/>
 			</div>
 			<Pagination

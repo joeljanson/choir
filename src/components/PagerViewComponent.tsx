@@ -9,14 +9,16 @@ import SimpleText from "./Subcomponents/SimpleText";
 type PagerViewProps = {
 	currentPage: number;
 	buffers: ToneAudioBuffers;
-	narrativeForPartOne: string;
+	partName: string;
+	place: string;
 	hasMicAccess: boolean;
 };
 
 function PagerView({
 	currentPage,
 	buffers,
-	narrativeForPartOne,
+	partName,
+	place,
 	hasMicAccess,
 }: PagerViewProps) {
 	console.log("PAGER VIEW", buffers);
@@ -28,7 +30,8 @@ function PagerView({
 						components={[
 							<SimpleText
 								buffers={buffers}
-								narrativeForPartOne={narrativeForPartOne}
+								partName={partName}
+								place={place}
 							/>,
 							//<PlayerComponent key="1" buffer={buffers.get("0")} />,
 							// <PlayerComponent key="1" buffer={buffers[1]} />,

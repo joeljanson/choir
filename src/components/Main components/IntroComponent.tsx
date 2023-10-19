@@ -12,7 +12,6 @@ interface Audio {
 }
 
 interface Place {
-	narrative: string;
 	audio: Audio[];
 }
 
@@ -25,7 +24,10 @@ interface VoiceJson {
 }
 
 export type IntroComponentProps = {
-	onLoaded: (buffers: ToneAudioBuffers, narrativeForPartOne: string) => void;
+	onLoaded: (
+		buffers: ToneAudioBuffers,
+		partAndPlace: { partName: string; place: string }
+	) => void;
 	pieceName: string;
 	partName: string;
 	/* buffersToLoad: Array<string>; */
@@ -40,7 +42,6 @@ IntroComponentProps) {
 	const [loaded, setLoaded] = useState(false);
 	const [error, setError] = useState(false);
 	const [buffers, setBuffers] = useState<ToneAudioBuffers | null>(null);
-	const [narrativeForPartOne, setNarrativeForPartOne] = useState<string>("");
 
 	const getRandomPlace = (voiceData: Voice): [string, Place] => {
 		const places = Object.keys(voiceData);
@@ -58,8 +59,6 @@ IntroComponentProps) {
 				jsonData[partName.toLowerCase()]
 			);
 			console.log("Place name:", placeName);
-			console.log("Narrative:", placeData.narrative);
-			setNarrativeForPartOne(placeData.narrative);
 			console.log("Audio:", placeData.audio);
 
 			const { audio } = placeData;
@@ -74,7 +73,10 @@ IntroComponentProps) {
 				onload: () => {
 					setBuffers(loadedBuffers);
 					setLoaded(true);
-					onLoaded(loadedBuffers, placeData.narrative);
+					onLoaded(loadedBuffers, {
+						partName: partName,
+						place: placeName,
+					});
 				},
 				onerror: (err) => {
 					console.log(err);

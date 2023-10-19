@@ -7,6 +7,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../../css/SimpleText.scss";
+import { getComponent } from "./ComponentMapping";
+import IntroductionText from "./voices/Introduction";
 
 /* import VideoPlayer from "./Video"; */
 
@@ -15,7 +17,8 @@ import "../../css/SimpleText.scss";
 
 type SimpleTextProps = {
 	buffers: ToneAudioBuffers;
-	narrativeForPartOne: string;
+	partName: string;
+	place: string;
 };
 
 type RandomPercentageEntry = {
@@ -24,7 +27,7 @@ type RandomPercentageEntry = {
 	playEntire: boolean;
 };
 
-function SimpleText({ buffers, narrativeForPartOne }: SimpleTextProps) {
+function SimpleText({ buffers, partName, place }: SimpleTextProps) {
 	const divRef = useRef<HTMLDivElement>(null);
 	const [scrollPosition, setScrollPosition] = useState<number>(0);
 	const [randomPercentages, setRandomPercentages] = useState<
@@ -140,117 +143,8 @@ function SimpleText({ buffers, narrativeForPartOne }: SimpleTextProps) {
 					{/* Volume: {myVol.current?.volume.value.toFixed(2)} */}
 				</div>
 				<div id="parallax-simpletext">
-					<h1>Introduction</h1>
-					<p>
-						This piece is about a trip. A long drive from the east coast of the
-						United States of America to the west. This first part of the piece
-						is you scrolling and reading through the text. Read it in your own
-						time. Also, be sure to read this and all of the following text every
-						time the piece is performed. So that you just don't scroll past it.
-					</p>
-					<p>
-						At times you will see text that look like this:{" "}
-						<span>This is how the text looks like, orange and big. </span>
-						This is text that you are supposed to read out loud (never read the
-						above text though). Phrase these words in any manner that you want
-						but make sure to articulate it and say it loud so that the audience
-						can hear your voice over what's going on in the speakers.
-					</p>
-					<p id="first">
-						In the speakers, initially the audio coming from the speakers will
-						be recordings representing the sounds that are somehow connected to
-						the text. For example, if you have gotten the text that is about Las
-						Vegas, the audio coming from your speaker will be sounds from a
-						casino. One audio file might already have been triggered, the piece
-						has begun!
-					</p>
-					<p>
-						Worth mentioning is also that you will get different parts of the
-						story each time this piece is performed, so sometimes you might get
-						the text about Las Vegas, sometimes you will read about arriving in
-						San Fransisco. At some point, after many rehearsals or performances,
-						you will have a more complete story. With that said, let's get
-						started.
-					</p>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<div dangerouslySetInnerHTML={{ __html: narrativeForPartOne }} />
-					{/* <br />
-					<br />
-					<br />
-					<br />
-					<h1>Chapter one</h1>
-					<p>
-						Not far from Las Vegas, the five of us in the car. I sat in the
-						passenger seat and <span>in the corner of my eye</span> I saw a bus
-						right next to our car. You didn’t notice it and put the blinkers on
-						to change lanes. Such a thin line. We drove for a bit more before
-						switching and I took over the driving. You apologized again for not
-						seeing the bus and for once thanked me for being a backseat driver.
-						We had about an hour left before turning onto{" "}
-						<span>the strip.</span>
-					</p>
-					<p>
-						We lived, of course, inside one of the casinos. Paris Las Vegas
-						Hotel it was called. From the window of one of our rooms, we could
-						see the Bellagio fountain. It made me think of{" "}
-						<span className="no-span" id="claire">
-							Claire de Lune
-						</span>
-						, and plotting, scheming. Oceans eleven. Childhood and cluelessness.
-					</p>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
-					<h1>Chapter two</h1>
-					<p>
-						Not far from Las Vegas, the five of us in the car. I sat in the
-						passenger seat and <span>in the corner of my eye</span> I saw a bus
-						right next to our car. You didn’t notice it and put the blinkers on
-						to change lanes. Such a thin line. We drove for a bit more before
-						switching and I took over the driving. You apologized again for not
-						seeing the bus and for once thanked me for being a backseat driver.
-						We had about an hour left before turning onto{" "}
-						<span>the strip.</span>
-					</p>
-					<p>
-						We lived, of course, inside one of the casinos. Paris Las Vegas
-						Hotel it was called. From the window of one of our rooms, we could
-						see the Bellagio fountain. It made me think of{" "}
-						<span className="no-span" id="claire">
-							Claire de Lune
-						</span>
-						, and plotting, scheming. Oceans eleven. Childhood and cluelessness.
-					</p> */}
-					{/* <button
-						onClick={() => {
-							console.log("Hello!");
-						}}
-					>
-						Click me!
-					</button> */}
+					<IntroductionText />
+					{getComponent(partName, place)}
 				</div>
 			</div>
 		</div>

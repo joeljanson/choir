@@ -1,7 +1,6 @@
 {
 	"soprano": {
 		"sanfransisco": {
-			"narrative": "<h1>Soprano</h1><p>San fransisco</p>",
 			"audio": [
 				{
 					"trigger": "atmos",
@@ -22,7 +21,6 @@
 			]
 		},
 		"vegas": {
-			"narrative": "<h1>Soprano</h1><p>Vegas</p>",
 			"audio": [
 				{
 					"trigger": "stinger1",
@@ -43,7 +41,6 @@
 			]
 		},
 		"newyork": {
-			"narrative": "<h1>Soprano</h1><p>New York</p>",
 			"audio": [
 				{
 					"trigger": "stinger1",
@@ -64,7 +61,6 @@
 			]
 		},
 		"niagara": {
-			"narrative": "<h1>Soprano</h1><p>Niagara</p>",
 			"audio": [
 				{
 					"trigger": "stinger1",
@@ -87,7 +83,6 @@
 	},
 	"alto": {
 		"vegas": {
-			"narrative": "<h1>Alto</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -96,7 +91,6 @@
 			]
 		},
 		"newyork": {
-			"narrative": "<h1>Alto</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -107,7 +101,6 @@
 	},
 	"tenor": {
 		"vegas": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -116,7 +109,6 @@
 			]
 		},
 		"newyork": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -127,7 +119,6 @@
 	},
 	"bass": {
 		"vegas": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",
@@ -136,7 +127,6 @@
 			]
 		},
 		"newyork": {
-			"narrative": "<h1>blablabl</h1><p>Hej</p>",
 			"audio": [
 				{
 					"trigger": "clairdelune",

@@ -19,16 +19,19 @@ function Decay({ partName }: PartComponentProps) {
 	const [started, setStarted] = useState(false);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [buffers, setBuffers] = useState<ToneAudioBuffers | null>(null);
-	const [narrativeForPartOne, setNarrativeForPartOne] = useState<string>("");
+	const [partAndPlace, setPartAndPlace] = useState<{
+		partName: string;
+		place: string;
+	}>();
 
 	useEffect(() => {}, [currentPage]);
 
 	const onLoaded = (
 		loadedBuffers: ToneAudioBuffers,
-		narrativeForPartOne: string
+		partAndPlace: { partName: string; place: string }
 	) => {
 		setBuffers(loadedBuffers);
-		setNarrativeForPartOne(narrativeForPartOne);
+		setPartAndPlace(partAndPlace);
 		setLoaded(true);
 		console.log("Loaded buffers are: ", loadedBuffers);
 		//const player = new Player(loadedBuffers.get("0")).toDestination().start();
@@ -112,7 +115,8 @@ function Decay({ partName }: PartComponentProps) {
 				<MainContent
 					currentPage={currentPage}
 					buffers={buffers!}
-					narrativeForPartOne={narrativeForPartOne}
+					partName={partAndPlace?.partName ?? "Unset partname"}
+					place={partAndPlace?.place ?? "Unset place"}
 					setCurrentPage={onSetCurrentPage}
 					totalCount={5}
 					hasMicAccess={false}
